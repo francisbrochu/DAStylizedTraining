@@ -1,6 +1,6 @@
 import torch
 import torchvision
-import torch.nn
+import torch.nn as nn
 import numpy as np
 from sklearn.metrics import accuracy_score
 
@@ -53,3 +53,9 @@ def evaluate(model, loader, criterion):
         error_history.append(1 - accuracy_score(targets, predictions))
 
     return loss_history, error_history
+
+
+def generate_parameter_lists(model):
+    pass
+
+

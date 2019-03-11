@@ -4,10 +4,10 @@ import torchvision
 
 
 # for dog breed identification
-class DBIResNet(nn.Module):
+class DBIDenseNet(nn.Module):
 
     def __init__(self):
-        super(DBIResNet, self).__init__()
+        super(DBIDenseNet, self).__init__()
 
         pass
 
@@ -16,10 +16,10 @@ class DBIResNet(nn.Module):
 
 
 # for Dogs vs Cats
-class DCResNet(nn.Module):
+class DCDenseNet(nn.Module):
 
     def __init__(self):
-        super(DCResNet, self).__init__()
+        super(DCDenseNet, self).__init__()
 
         pass
 
@@ -28,10 +28,10 @@ class DCResNet(nn.Module):
 
 
 # for dice
-class DiceResNet(nn.Module):
+class DiceDenseNet(nn.Module):
 
     def __init__(self):
-        super(DiceResNet, self).__init__()
+        super(DiceDenseNet, self).__init__()
 
         pass
 
@@ -40,10 +40,10 @@ class DiceResNet(nn.Module):
 
 
 # for Food101
-class Food101ResNet(nn.Module):
+class Food101DenseNet(nn.Module):
 
     def __init__(self):
-        super(Food101ResNet, self).__init__()
+        super(Food101DenseNet, self).__init__()
 
         pass
 
@@ -51,16 +51,16 @@ class Food101ResNet(nn.Module):
         return x
 
 
-def load_resnet_model(dataset_name):
+def load_densenet_model(dataset_name):
 
     if dataset_name == "DBI":
-        return DBIResNet()
+        return DBIDenseNet()
 
     elif dataset_name == "DogsCats":
-        return DCResNet()
+        return DCDenseNet()
 
     elif dataset_name == "Dice":
-        return DiceResNet()
+        return DiceDenseNet()
 
     else:
-        return Food101ResNet()
+        return Food101DenseNet()
