@@ -31,15 +31,16 @@ learning_rate = 1e-4
 classif_lr = 1e-3
 weight_decay = 1e-5
 n_epochs = 50
+num_workers = 3
 
 epochs_list = []
 
 if experiment_type == "base":
-    train_loader, validation_loader = load_base_dataset(dataset, batch_size=batch_size)
+    train_loader, validation_loader = load_base_dataset(dataset, batch_size=batch_size, num_workers=num_workers)
 elif experiment_type == "style":
-    train_loader, validation_loader = load_style_dataset(dataset, batch_size=batch_size)
+    train_loader, validation_loader = load_style_dataset(dataset, batch_size=batch_size, num_workers=num_workers)
 else:
-    train_loader, validation_loader = load_mixed_dataset(dataset, batch_size=batch_size)
+    train_loader, validation_loader = load_mixed_dataset(dataset, batch_size=batch_size, num_workers=num_workers)
 
 # define model
 if model_type == "resnet":

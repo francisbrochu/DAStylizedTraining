@@ -4,7 +4,7 @@ import torch.utils.data
 import numpy as np
 
 
-def load_base_dataset(dataset_name, batch_size=32):
+def load_base_dataset(dataset_name, batch_size=32, num_workers=3):
 
     if dataset_name == "DBI":
         dataset_path = "dog-breed-identification/"
@@ -33,14 +33,14 @@ def load_base_dataset(dataset_name, batch_size=32):
     valid_dataset = torchvision.datasets.ImageFolder(path + "val/", transform=valid_transformer)
 
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
-                                               num_workers=3)
+                                               num_workers=num_workers)
     valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=batch_size, shuffle=True,
-                                               num_workers=3)
+                                               num_workers=num_workers)
 
     return train_loader, valid_loader
 
 
-def load_style_dataset(dataset_name, batch_size=32):
+def load_style_dataset(dataset_name, batch_size=32, num_workers=3):
 
     if dataset_name == "DBI":
         dataset_path = "dog-breed-identification/"
@@ -69,14 +69,14 @@ def load_style_dataset(dataset_name, batch_size=32):
     valid_dataset = torchvision.datasets.ImageFolder(path + "val/", transform=valid_transformer)
 
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
-                                               num_workers=3)
+                                               num_workers=num_workers)
     valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=batch_size, shuffle=True,
-                                               num_workers=3)
+                                               num_workers=num_workers)
 
     return train_loader, valid_loader
 
 
-def load_mixed_dataset(dataset_name, batch_size=32):
+def load_mixed_dataset(dataset_name, batch_size=32, num_workers=3):
 
     if dataset_name == "DBI":
         dataset_path = "dog-breed-identification/"
@@ -124,8 +124,8 @@ def load_mixed_dataset(dataset_name, batch_size=32):
     valid_dataset = torch.utils.data.ConcatDataset([base_valid_dataset, style_valid_dataset])
 
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
-                                               num_workers=3)
+                                               num_workers=num_workers)
     valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=batch_size, shuffle=True,
-                                               num_workers=3)
+                                               num_workers=num_workers)
 
     return train_loader, valid_loader
