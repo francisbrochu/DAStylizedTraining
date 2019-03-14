@@ -9,10 +9,12 @@ class DBIDenseNet(nn.Module):
     def __init__(self):
         super(DBIDenseNet, self).__init__()
 
-        pass
+        self.model = torchvision.models.densenet121(pretrained=True)
+        input_fc_dim = self.model.classifier.in_features
+        self.model.classifier = nn.Linear(input_fc_dim, 120)
 
     def forward(self, x):
-        return x
+        return self.model(x)
 
 
 # for Dogs vs Cats
@@ -21,10 +23,12 @@ class DCDenseNet(nn.Module):
     def __init__(self):
         super(DCDenseNet, self).__init__()
 
-        pass
+        self.model = torchvision.models.densenet121(pretrained=True)
+        input_fc_dim = self.model.classifier.in_features
+        self.model.classifier = nn.Linear(input_fc_dim, 2)
 
     def forward(self, x):
-        return x
+        return self.model(x)
 
 
 # for dice
@@ -33,10 +37,12 @@ class DiceDenseNet(nn.Module):
     def __init__(self):
         super(DiceDenseNet, self).__init__()
 
-        pass
+        self.model = torchvision.models.densenet121(pretrained=True)
+        input_fc_dim = self.model.classifier.in_features
+        self.model.classifier = nn.Linear(input_fc_dim, 8)
 
     def forward(self, x):
-        return x
+        return self.model(x)
 
 
 # for Food101
@@ -45,10 +51,12 @@ class Food101DenseNet(nn.Module):
     def __init__(self):
         super(Food101DenseNet, self).__init__()
 
-        pass
+        self.model = torchvision.models.densenet121(pretrained=True)
+        input_fc_dim = self.model.classifier.in_features
+        self.model.classifier = nn.Linear(input_fc_dim, 101)
 
     def forward(self, x):
-        return x
+        return self.model(x)
 
 
 def load_densenet_model(dataset_name):

@@ -5,7 +5,7 @@ import torch.optim
 import numpy as np
 import matplotlib.pyplot as plt
 import torch.utils.data
-from deeputils import training_epoch, evaluate, generate_parameter_lists
+from deeputils import training_epoch, evaluate, generate_parameter_lists, plot_history
 from datasetloaders import load_base_dataset, load_style_dataset, load_mixed_dataset
 import time
 from resnets import load_resnet_model
@@ -28,6 +28,7 @@ patience = 10
 
 batch_size = 16
 learning_rate = 1e-4
+classif_lr = 1e-3
 weight_decay = 1e-5
 n_epochs = 50
 
@@ -50,8 +51,9 @@ else:
 
 # define optimizer and loss
 # generate the parameter lists first
-# TODO param lists
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
+convolutions, linear = generate_parameter_lists(model, model_type)
+optimizer = torch.optim.Adam([{"params": convolutions},
+                              {"params": linear, "lr": classif_lr}], lr=learning_rate, weight_decay=weight_decay)
 criterion = nn.CrossEntropyLoss()
 
 # scheduling options
@@ -63,6 +65,7 @@ minimum_error = 1.0
 end_epoch = n_epochs
 
 epoch_history = [[], [], [], []]
+end_by_earlystop = False
 
 # train
 for i in range(n_epochs):
@@ -104,7 +107,13 @@ for i in range(n_epochs):
             end_epoch = i + 1
             print("Stopping early at epoch {}".format(end_epoch + 1))
             model = torch.load("./best_ckpt_{}_{}_{}.p".format(dataset, model_type, experiment_type))
+            end_by_earlystop = True
             break
+
+if early_stopping:
+    if (not end_by_earlystop) and (epoch_history[3][-1] > minimum_error):
+        torch.load("./best_ckpt_{}_{}_{}.p".format(dataset, model_type, experiment_type))
+        print("Loading best model on validation as final model.")
 
 # clear checkpoint
 os.remove("./best_ckpt_{}_{}_{}.p".format(dataset, model_type, experiment_type))
@@ -113,6 +122,4 @@ os.remove("./best_ckpt_{}_{}_{}.p".format(dataset, model_type, experiment_type))
 torch.save(model, "./bestModel_{}_{}_{}.p".format(dataset, model_type, experiment_type))
 
 # plot history
-epochs = list(range(end_epoch))
-
-
+plot_history(epoch_history, end_epoch, dataset, model_type, experiment_type)

@@ -1,15 +1,123 @@
 import torch
 import torchvision
+import torch.utils.data
 import numpy as np
 
 
 def load_base_dataset(dataset_name, batch_size=32):
-    pass
+
+    if dataset_name == "DBI":
+        dataset_path = "dog-breed-identification/"
+    elif dataset_name == "DogsCats":
+        dataset_path = "dogs-vs-cats/"
+    elif dataset_name == "Dice":
+        dataset_path = "dice/"
+    else:  # food 101
+        dataset_path = "food101/"
+
+    train_transformer = torchvision.transforms.Compose([
+        torchvision.transforms.Resize((224, 224)),
+        torchvision.transforms.ToTensor()
+    ])
+
+    valid_transformer = torchvision.transforms.Compose([
+        torchvision.transforms.Resize((224, 224)),
+        torchvision.transforms.ToTensor()
+    ])
+
+    path = "../data/" + dataset_path
+
+    train_dataset = torchvision.datasets.ImageFolder(path + "train/", transform=train_transformer)
+    valid_dataset = torchvision.datasets.ImageFolder(path + "valid/", transform=valid_transformer)
+
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
+                                               num_workers=3)
+    valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=batch_size, shuffle=True,
+                                               num_workers=3)
+
+    return train_loader, valid_loader
 
 
 def load_style_dataset(dataset_name, batch_size=32):
-    pass
+
+    if dataset_name == "DBI":
+        dataset_path = "dog-breed-identification/"
+    elif dataset_name == "DogsCats":
+        dataset_path = "dogs-vs-cats/"
+    elif dataset_name == "Dice":
+        dataset_path = "dice/"
+    else:  # food 101
+        dataset_path = "food101/"
+
+    train_transformer = torchvision.transforms.Compose([
+        torchvision.transforms.Resize((224, 224)),
+        torchvision.transforms.ToTensor()
+    ])
+
+    valid_transformer = torchvision.transforms.Compose([
+        torchvision.transforms.Resize((224, 224)),
+        torchvision.transforms.ToTensor()
+    ])
+
+    path = "../data/stylized/" + dataset_path
+
+    train_dataset = torchvision.datasets.ImageFolder(path + "train/", transform=train_transformer)
+    valid_dataset = torchvision.datasets.ImageFolder(path + "valid/", transform=valid_transformer)
+
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
+                                               num_workers=3)
+    valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=batch_size, shuffle=True,
+                                               num_workers=3)
+
+    return train_loader, valid_loader
 
 
 def load_mixed_dataset(dataset_name, batch_size=32):
-    pass
+
+    if dataset_name == "DBI":
+        dataset_path = "dog-breed-identification/"
+    elif dataset_name == "DogsCats":
+        dataset_path = "dogs-vs-cats/"
+    elif dataset_name == "Dice":
+        dataset_path = "dice/"
+    else:  # food 101
+        dataset_path = "food101/"
+
+    train_base_transformer = torchvision.transforms.Compose([
+        torchvision.transforms.Resize((224, 224)),
+        torchvision.transforms.ToTensor()
+    ])
+
+    valid_base_transformer = torchvision.transforms.Compose([
+        torchvision.transforms.Resize((224, 224)),
+        torchvision.transforms.ToTensor()
+    ])
+
+    train_style_transformer = torchvision.transforms.Compose([
+        torchvision.transforms.Resize((224, 224)),
+        torchvision.transforms.ToTensor()
+    ])
+
+    valid_style_transformer = torchvision.transforms.Compose([
+        torchvision.transforms.Resize((224, 224)),
+        torchvision.transforms.ToTensor()
+    ])
+
+    basepath = "../data/" + dataset_path
+    stylepath = "../data/stylized/" + dataset_path
+
+    base_train_dataset = torchvision.datasets.ImageFolder(basepath + "train/", transform=train_base_transformer)
+    base_valid_dataset = torchvision.datasets.ImageFolder(basepath + "valid/", transform=valid_base_transformer)
+
+    style_train_dataset = torchvision.datasets.ImageFolder(stylepath + "train/", transform=train_style_transformer)
+    style_valid_dataset = torchvision.datasets.ImageFolder(stylepath + "valid/", transform=valid_style_transformer)
+
+    train_dataset = torch.utils.data.ConcatDataset([base_train_dataset, style_train_dataset])
+    valid_dataset = torch.utils.data.ConcatDataset([base_valid_dataset, style_valid_dataset])
+
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
+                                               num_workers=3)
+    valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=batch_size, shuffle=True,
+                                               num_workers=3)
+
+    return train_loader, valid_loader

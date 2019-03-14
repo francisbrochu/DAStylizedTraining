@@ -3,6 +3,8 @@ import torchvision
 import torch.nn as nn
 import numpy as np
 from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 def training_epoch(model, train_loader, optimizer, criterion, scheduler=None):
@@ -55,7 +57,43 @@ def evaluate(model, loader, criterion):
     return loss_history, error_history
 
 
-def generate_parameter_lists(model):
-    pass
+def generate_parameter_lists(model, model_type):
+    convs = []
+    lin = []
+    if model_type == "resnet":
+        for name, param in model.model.named_parameters():
+            if name in {"fc.weight", "fc.bias"}:
+                lin.append(param)
+            else:
+                convs.append(param)
+    else:  # densenet
+        for name, param in model.model.named_parameters():
+            if name in {"classifier.weight", "classifier.bias"}:
+                lin.append(param)
+            else:
+                convs.append(param)
+
+    return convs, lin
+
+
+def plot_history(history, end_epoch, dataset, model_type, experiment_type):
+    epochs = list(range(end_epoch))
+
+    fig = plt.figure()
+
+    subfig1 = fig.add_subplot(2, 1, 1)
+    subfig1.plot(epochs, history[0], color="blue", label="Train")
+    subfig1.plot(epochs, history[2], color="orange", label="Validation")
+    subfig1.set_title("Losses by epoch")
+    subfig1.legend()
+
+    subfig2 = fig.add_subplot(2, 1, 2)
+    subfig2.plot(epochs, history[1], color="blue", label="Train")
+    subfig2.plot(epochs, history[3], color="orange", label="Validation")
+    subfig2.set_title("Error by epoch")
+    subfig2.legend()
+
+    plt.savefig("history_{}_{}_{}.png".format(dataset, model_type, experiment_type))
+    plt.show()
 
 
