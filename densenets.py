@@ -39,7 +39,7 @@ class DiceDenseNet(nn.Module):
 
         self.model = torchvision.models.densenet121(pretrained=True)
         input_fc_dim = self.model.classifier.in_features
-        self.model.classifier = nn.Linear(input_fc_dim, 8)
+        self.model.classifier = nn.Linear(input_fc_dim, 6)
 
     def forward(self, x):
         return self.model(x)

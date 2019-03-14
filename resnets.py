@@ -39,7 +39,7 @@ class DiceResNet(nn.Module):
 
         self.model = torchvision.models.resnet34(pretrained=True)
         input_fc_dim = self.model.fc.in_features
-        self.model.fc = nn.Linear(input_fc_dim, 8)
+        self.model.fc = nn.Linear(input_fc_dim, 6)
 
     def forward(self, x):
         return self.model(x)
