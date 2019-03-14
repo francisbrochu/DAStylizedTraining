@@ -8,19 +8,40 @@ def load_base_dataset(dataset_name, batch_size=32, num_workers=3):
 
     if dataset_name == "DBI":
         dataset_path = "dog-breed-identification/"
+
+        train_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
     elif dataset_name == "DogsCats":
         dataset_path = "dogs-vs-cats/"
+
+        train_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
     elif dataset_name == "Dice":
         dataset_path = "dice/"
+
+        train_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
     else:  # food 101
         dataset_path = "food101/"
 
-    train_transformer = torchvision.transforms.Compose([
-        torchvision.transforms.RandomHorizontalFlip(0.5),
-        torchvision.transforms.RandomVerticalFlip(0.1),
-        torchvision.transforms.Resize((224, 224)),
-        torchvision.transforms.ToTensor()
-    ])
+        train_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
 
     valid_transformer = torchvision.transforms.Compose([
         torchvision.transforms.Resize((224, 224)),
@@ -44,19 +65,40 @@ def load_style_dataset(dataset_name, batch_size=32, num_workers=3):
 
     if dataset_name == "DBI":
         dataset_path = "dog-breed-identification/"
+
+        train_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
     elif dataset_name == "DogsCats":
         dataset_path = "dogs-vs-cats/"
+
+        train_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
     elif dataset_name == "Dice":
         dataset_path = "dice/"
+
+        train_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
     else:  # food 101
         dataset_path = "food101/"
 
-    train_transformer = torchvision.transforms.Compose([
-        torchvision.transforms.RandomHorizontalFlip(0.5),
-        torchvision.transforms.RandomVerticalFlip(0.1),
-        torchvision.transforms.Resize((224, 224)),
-        torchvision.transforms.ToTensor()
-    ])
+        train_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
 
     valid_transformer = torchvision.transforms.Compose([
         torchvision.transforms.Resize((224, 224)),
@@ -80,28 +122,70 @@ def load_mixed_dataset(dataset_name, batch_size=32, num_workers=3):
 
     if dataset_name == "DBI":
         dataset_path = "dog-breed-identification/"
+
+        train_base_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
+
+        train_style_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
     elif dataset_name == "DogsCats":
         dataset_path = "dogs-vs-cats/"
+
+        train_base_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
+
+        train_style_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
     elif dataset_name == "Dice":
         dataset_path = "dice/"
+
+        train_base_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
+
+        train_style_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
     else:  # food 101
         dataset_path = "food101/"
 
-    train_base_transformer = torchvision.transforms.Compose([
-        torchvision.transforms.RandomHorizontalFlip(0.5),
-        torchvision.transforms.RandomVerticalFlip(0.1),
-        torchvision.transforms.Resize((224, 224)),
-        torchvision.transforms.ToTensor()
-    ])
+        train_base_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
+
+        train_style_transformer = torchvision.transforms.Compose([
+            torchvision.transforms.RandomHorizontalFlip(0.5),
+            torchvision.transforms.RandomVerticalFlip(0.1),
+            torchvision.transforms.Resize((224, 224)),
+            torchvision.transforms.ToTensor()
+        ])
 
     valid_base_transformer = torchvision.transforms.Compose([
-        torchvision.transforms.Resize((224, 224)),
-        torchvision.transforms.ToTensor()
-    ])
-
-    train_style_transformer = torchvision.transforms.Compose([
-        torchvision.transforms.RandomHorizontalFlip(0.5),
-        torchvision.transforms.RandomVerticalFlip(0.1),
         torchvision.transforms.Resize((224, 224)),
         torchvision.transforms.ToTensor()
     ])
