@@ -16,6 +16,8 @@ def load_base_dataset(dataset_name, batch_size=32):
         dataset_path = "food101/"
 
     train_transformer = torchvision.transforms.Compose([
+        torchvision.transforms.RandomHorizontalFlip(0.5),
+        torchvision.transforms.RandomVerticalFlip(0.1),
         torchvision.transforms.Resize((224, 224)),
         torchvision.transforms.ToTensor()
     ])
@@ -28,7 +30,7 @@ def load_base_dataset(dataset_name, batch_size=32):
     path = "../data/" + dataset_path
 
     train_dataset = torchvision.datasets.ImageFolder(path + "train/", transform=train_transformer)
-    valid_dataset = torchvision.datasets.ImageFolder(path + "valid/", transform=valid_transformer)
+    valid_dataset = torchvision.datasets.ImageFolder(path + "val/", transform=valid_transformer)
 
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
                                                num_workers=3)
@@ -50,6 +52,8 @@ def load_style_dataset(dataset_name, batch_size=32):
         dataset_path = "food101/"
 
     train_transformer = torchvision.transforms.Compose([
+        torchvision.transforms.RandomHorizontalFlip(0.5),
+        torchvision.transforms.RandomVerticalFlip(0.1),
         torchvision.transforms.Resize((224, 224)),
         torchvision.transforms.ToTensor()
     ])
@@ -62,7 +66,7 @@ def load_style_dataset(dataset_name, batch_size=32):
     path = "../data/stylized/" + dataset_path
 
     train_dataset = torchvision.datasets.ImageFolder(path + "train/", transform=train_transformer)
-    valid_dataset = torchvision.datasets.ImageFolder(path + "valid/", transform=valid_transformer)
+    valid_dataset = torchvision.datasets.ImageFolder(path + "val/", transform=valid_transformer)
 
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
                                                num_workers=3)
@@ -84,6 +88,8 @@ def load_mixed_dataset(dataset_name, batch_size=32):
         dataset_path = "food101/"
 
     train_base_transformer = torchvision.transforms.Compose([
+        torchvision.transforms.RandomHorizontalFlip(0.5),
+        torchvision.transforms.RandomVerticalFlip(0.1),
         torchvision.transforms.Resize((224, 224)),
         torchvision.transforms.ToTensor()
     ])
@@ -94,6 +100,8 @@ def load_mixed_dataset(dataset_name, batch_size=32):
     ])
 
     train_style_transformer = torchvision.transforms.Compose([
+        torchvision.transforms.RandomHorizontalFlip(0.5),
+        torchvision.transforms.RandomVerticalFlip(0.1),
         torchvision.transforms.Resize((224, 224)),
         torchvision.transforms.ToTensor()
     ])
@@ -107,10 +115,10 @@ def load_mixed_dataset(dataset_name, batch_size=32):
     stylepath = "../data/stylized/" + dataset_path
 
     base_train_dataset = torchvision.datasets.ImageFolder(basepath + "train/", transform=train_base_transformer)
-    base_valid_dataset = torchvision.datasets.ImageFolder(basepath + "valid/", transform=valid_base_transformer)
+    base_valid_dataset = torchvision.datasets.ImageFolder(basepath + "val/", transform=valid_base_transformer)
 
     style_train_dataset = torchvision.datasets.ImageFolder(stylepath + "train/", transform=train_style_transformer)
-    style_valid_dataset = torchvision.datasets.ImageFolder(stylepath + "valid/", transform=valid_style_transformer)
+    style_valid_dataset = torchvision.datasets.ImageFolder(stylepath + "val/", transform=valid_style_transformer)
 
     train_dataset = torch.utils.data.ConcatDataset([base_train_dataset, style_train_dataset])
     valid_dataset = torch.utils.data.ConcatDataset([base_valid_dataset, style_valid_dataset])
