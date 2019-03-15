@@ -5,12 +5,13 @@ import torch.optim
 import numpy as np
 import matplotlib.pyplot as plt
 import torch.utils.data
-from deeputils import training_epoch, evaluate, generate_parameter_lists, plot_history
+from deeputils import training_epoch, evaluate, generate_parameter_lists, plot_history, read_config
 from datasetloaders import load_base_dataset, load_style_dataset, load_mixed_dataset
 import time
 from resnets import load_resnet_model
 from densenets import load_densenet_model
 import os
+import sys
 
 np.random.seed(42)
 torch.manual_seed(42)
@@ -18,22 +19,28 @@ torch.cuda.manual_seed_all(42)
 
 # experiment parameters
 
-dataset = "DBI"  # DBI, DogsCats, Dice, Food101
-model_type = "resnet"  # resnet or densenet
+if len(sys.argv) != 2:
+    raise RuntimeError("Pass a config file.")
+else:
+    fname = sys.argv[1]
 
-experiment_type = "base"  # base, style, mixed
+conf = read_config(fname)
 
-early_stopping = False
-patience = 10
+dataset = conf["dataset"]  # DBI, DogsCats, Dice, Food101
+model_type = conf["model_type"]  # resnet or densenet
+experiment_type = conf["experiment_type"]  # base, style, mixed
 
-batch_size = 16
-learning_rate = 1e-4
-classif_lr = 1e-3
-weight_decay = 1e-5
-n_epochs = 50
-num_workers = 3
+early_stopping = conf["early_stopping"]
+patience = conf["patience"]
 
-epochs_list = []
+batch_size = conf["batch_size"]
+learning_rate = conf["learning_rate"]
+classif_lr = conf["classif_lr"]
+weight_decay = conf["weight_decay"]
+n_epochs = conf["n_epochs"]
+num_workers = conf["n_workers"]
+
+epochs_list = conf["epochs_list"]
 
 if experiment_type == "base":
     train_loader, validation_loader = load_base_dataset(dataset, batch_size=batch_size, num_workers=num_workers)
@@ -58,7 +65,7 @@ optimizer = torch.optim.Adam([{"params": convolutions},
 criterion = nn.CrossEntropyLoss()
 
 # scheduling options
-scheduler = None
+scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=epochs_list, gamma=conf["gamma"])
 
 # define early stopping memory and epoch histories
 epoch_counter = 0

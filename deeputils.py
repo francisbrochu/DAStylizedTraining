@@ -5,7 +5,8 @@ import numpy as np
 from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+import configparser
+import json
 
 def training_epoch(model, train_loader, optimizer, criterion, scheduler=None):
     loss_history = []
@@ -97,3 +98,30 @@ def plot_history(history, end_epoch, dataset, model_type, experiment_type):
     plt.show()
 
 
+def read_config(filename):
+    conf = {}
+
+    cfg = configparser.ConfigParser()
+    cfg.read(filename)
+
+    conf["dataset"] = cfg["Experiment"]["dataset"]
+    conf["model_type"] = cfg["Experiment"]["model_type"]
+    conf["experiment_type"] = cfg["Experiment"]["experiment_type"]
+
+    conf["early_stopping"] = cfg.getboolean("Parameters", "early_stopping")  # TODO check
+    conf["patience"] = int(cfg["Parameters"]["patience"])
+    conf["batch_size"] = int(cfg["Parameters"]["batch_size"])
+    conf["learning_rate"] = float(cfg["Section"]["learning_rate"])
+    conf["classif_lr"] = float(cfg["Parameters"]["classif_lr"])
+    conf["weight_decay"] = float(cfg["Parameters"]["weight_decay"])
+    conf["n_epochs"] = int(cfg["Parameters"]["n_epochs"])
+    conf["n_workers"] = int(cfg["Parameters"]["n_workers"])
+    conf["gamma"] = float(cfg["Parameters"]["gamma"])
+
+    epochs_list = []
+    if cfg.getboolean("Parameters", "scheduler"):
+        epochs_list = json.loads(cfg.get("Scheduler", "epochs_list"))
+
+    conf["epochs_list"] = epochs_list
+
+    return conf
