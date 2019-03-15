@@ -14,6 +14,9 @@ The remaining images form the training set.
 The datasets were then style-transferred by the [Stylized ImageNet git](https://github.com/rgeirhos/Stylized-ImageNet).
 
 [Food101 (101 000 images)](https://www.kaggle.com/dansbecker/food-101) 
+
 [DogBreedIdentification (10 200 images)](https://www.kaggle.com/c/dog-breed-identification)
+
 [DogsVsCats (25 000 images)](https://www.kaggle.com/c/dogs-vs-cats)
+
 [Dice (16 000 images)](https://www.kaggle.com/ucffool/dice-d4-d6-d8-d10-d12-d20-images)
