@@ -26,7 +26,7 @@ class DCSqueezeNet(nn.Module):
 
         self.model = torchvision.models.squeezenet1_1(pretrained=True)
         self.model.num_classes = 2
-        input_fc_dim = self.model.classifier.in_features
+        input_fc_dim = self.model.classifier[1].in_channels
         self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
     def forward(self, x):
@@ -41,7 +41,7 @@ class DiceSqueezeeNet(nn.Module):
 
         self.model = torchvision.models.squeezenet1_1(pretrained=True)
         self.model.num_classes = 6
-        input_fc_dim = self.model.classifier.in_features
+        input_fc_dim = self.model.classifier[1].in_channels
         self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
     def forward(self, x):
@@ -56,7 +56,7 @@ class Food101SqueezeNet(nn.Module):
 
         self.model = torchvision.models.squeezenet1_1(pretrained=True)
         self.model.num_classes = 101
-        input_fc_dim = self.model.classifier.in_features
+        input_fc_dim = self.model.classifier[1].in_channels
         self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
     def forward(self, x):
