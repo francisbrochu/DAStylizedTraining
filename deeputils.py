@@ -84,12 +84,12 @@ def plot_history(history, end_epoch, dataset, model_type, experiment_type):
 
     subfig1 = fig.add_subplot(2, 1, 1)
     subfig1.plot(epochs, history[0], color="blue", label="Train")
-    subfig1.plot(epochs, history[2], color="orange", label="Validation")
+    subfig1.plot(epochs, history[1], color="orange", label="Validation")
     subfig1.set_title("Losses by epoch")
     subfig1.legend()
 
     subfig2 = fig.add_subplot(2, 1, 2)
-    subfig2.plot(epochs, history[1], color="blue", label="Train")
+    subfig2.plot(epochs, history[2], color="blue", label="Train")
     subfig2.plot(epochs, history[3], color="orange", label="Validation")
     subfig2.set_title("Error by epoch")
     subfig2.legend()
