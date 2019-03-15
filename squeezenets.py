@@ -59,7 +59,7 @@ class Food101SqueezeNet(nn.Module):
         return self.model(x)
 
 
-def load_densenet_model(dataset_name):
+def load_squeezenet_model(dataset_name):
 
     if dataset_name == "DBI":
         return DBISqueezeNet()
