@@ -100,7 +100,7 @@ for i in range(n_epochs):
     epoch_history[3].append(avg_valid_error)
 
     # print epoch info
-    print("[-] Epoch {} in {} seconds : Training Loss = {} ,Training Error = {}; "
+    print("[-] Epoch {} in {} seconds : Training Loss = {}, Training Error = {}; "
           "Validation Loss = {}, Validation Error = {} [-]".format(i+1,
                                                                round(end_time - start_time, 2),
                                                                round(avg_train_loss, 4),
