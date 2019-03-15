@@ -10,8 +10,9 @@ class DBISqueezeNet(nn.Module):
         super(DBISqueezeNet, self).__init__()
 
         self.model = torchvision.models.squeezenet1_1(pretrained=True)
+        self.model.num_classes = 120
         input_fc_dim = self.model.classifier[1].in_channels
-        self.model.classifier[1] = nn.Conv2d(input_fc_dim, 120, kernel_size=(1, 1), stride=(1, 1))
+        self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
     def forward(self, x):
         return self.model(x)
@@ -24,8 +25,9 @@ class DCSqueezeNet(nn.Module):
         super(DCSqueezeNet, self).__init__()
 
         self.model = torchvision.models.squeezenet1_1(pretrained=True)
+        self.model.num_classes = 2
         input_fc_dim = self.model.classifier.in_features
-        self.model.classifier[1] = nn.Conv2d(input_fc_dim, 2, kernel_size=(1, 1), stride=(1, 1))
+        self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
     def forward(self, x):
         return self.model(x)
@@ -38,8 +40,9 @@ class DiceSqueezeeNet(nn.Module):
         super(DiceSqueezeeNet, self).__init__()
 
         self.model = torchvision.models.squeezenet1_1(pretrained=True)
+        self.model.num_classes = 6
         input_fc_dim = self.model.classifier.in_features
-        self.model.classifier[1] = nn.Conv2d(input_fc_dim, 6, kernel_size=(1, 1), stride=(1, 1))
+        self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
     def forward(self, x):
         return self.model(x)
@@ -52,8 +55,9 @@ class Food101SqueezeNet(nn.Module):
         super(Food101SqueezeNet, self).__init__()
 
         self.model = torchvision.models.squeezenet1_1(pretrained=True)
+        self.model.num_classes = 101
         input_fc_dim = self.model.classifier.in_features
-        self.model.classifier[1] = nn.Conv2d(input_fc_dim, 101, kernel_size=(1, 1), stride=(1, 1))
+        self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
     def forward(self, x):
         return self.model(x)
