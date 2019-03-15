@@ -111,7 +111,7 @@ def read_config(filename):
     conf["early_stopping"] = cfg.getboolean("Parameters", "early_stopping")  # TODO check
     conf["patience"] = int(cfg["Parameters"]["patience"])
     conf["batch_size"] = int(cfg["Parameters"]["batch_size"])
-    conf["learning_rate"] = float(cfg["Section"]["learning_rate"])
+    conf["learning_rate"] = float(cfg["Parameters"]["learning_rate"])
     conf["classif_lr"] = float(cfg["Parameters"]["classif_lr"])
     conf["weight_decay"] = float(cfg["Parameters"]["weight_decay"])
     conf["n_epochs"] = int(cfg["Parameters"]["n_epochs"])
