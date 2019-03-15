@@ -134,7 +134,7 @@ if early_stopping:
     os.remove("./best_ckpt_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
 
 # save model
-torch.save(model, "./finalModel_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type_id))
+torch.save(model, "./finalModel_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
 
 # plot history
 plot_history(epoch_history, end_epoch, dataset, model_type, experiment_type)
