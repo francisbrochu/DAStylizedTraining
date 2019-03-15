@@ -53,7 +53,7 @@ def evaluate(model, loader, criterion):
         predictions = predictions.max(dim=1)[1]
 
         loss_history.append(loss.item())
-        error_history.append(1 - accuracy_score(targets, predictions))
+        error_history.append(1 - accuracy_score(targets.cpu(), predictions.cpu()))
 
     return loss_history, error_history
 
