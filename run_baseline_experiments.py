@@ -99,7 +99,13 @@ for i in range(n_epochs):
     epoch_history[3].append(avg_valid_error)
 
     # print epoch info
-    print("[-] Epoch {} in {} seconds : Training Loss".format(i+1, round(end_time - start_time, 2)))
+    print("[-] Epoch {} in {} seconds : Training Loss = {} ,Training Error = {}; "
+          "Validation Loss = {}, Validation Error = {} [-]".format(i+1,
+                                                               round(end_time - start_time, 2),
+                                                               round(avg_train_loss, 4),
+                                                               round(avg_train_error * 100, 2),
+                                                               round(avg_valid_loss, 4),
+                                                               round(avg_valid_error * 100, 2)))
 
     # early stopping
     if early_stopping:
