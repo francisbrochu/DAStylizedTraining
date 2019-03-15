@@ -129,8 +129,8 @@ if early_stopping:
         torch.load("./best_ckpt_{}_{}_{}.p".format(dataset, model_type, experiment_type))
         print("Loading best model on validation as final model.")
 
-# clear checkpoint
-os.remove("./best_ckpt_{}_{}_{}.p".format(dataset, model_type, experiment_type))
+    # clear checkpoint
+    os.remove("./best_ckpt_{}_{}_{}.p".format(dataset, model_type, experiment_type))
 
 # save model
 torch.save(model, "./bestModel_{}_{}_{}.p".format(dataset, model_type, experiment_type))
