@@ -107,6 +107,7 @@ def read_config(filename):
     conf["dataset"] = cfg["Experiment"]["dataset"]
     conf["model_type"] = cfg["Experiment"]["model_type"]
     conf["experiment_type"] = cfg["Experiment"]["experiment_type"]
+    conf["id"] = cfg["Experiment"]["id"]
 
     conf["early_stopping"] = cfg.getboolean("Parameters", "early_stopping")  # TODO check
     conf["patience"] = int(cfg["Parameters"]["patience"])

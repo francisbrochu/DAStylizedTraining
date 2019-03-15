@@ -29,6 +29,7 @@ conf = read_config(fname)
 dataset = conf["dataset"]  # DBI, DogsCats, Dice, Food101
 model_type = conf["model_type"]  # resnet or densenet
 experiment_type = conf["experiment_type"]  # base, style, mixed
+id = conf["id"]
 
 early_stopping = conf["early_stopping"]
 patience = conf["patience"]
@@ -113,27 +114,27 @@ for i in range(n_epochs):
         if avg_valid_error < minimum_error:
             epoch_counter = 0
             minimum_error = avg_valid_error
-            torch.save(model, "./best_ckpt_{}_{}_{}.p".format(dataset, model_type, experiment_type))
+            torch.save(model, "./best_ckpt_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
         else:
             epoch_counter += 1
 
         if epoch_counter >= patience:
             end_epoch = i + 1
             print("Stopping early at epoch {}".format(end_epoch + 1))
-            model = torch.load("./best_ckpt_{}_{}_{}.p".format(dataset, model_type, experiment_type))
+            model = torch.load("./best_ckpt_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
             end_by_earlystop = True
             break
 
 if early_stopping:
     if (not end_by_earlystop) and (epoch_history[3][-1] > minimum_error):
-        torch.load("./best_ckpt_{}_{}_{}.p".format(dataset, model_type, experiment_type))
+        torch.load("./best_ckpt_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
         print("Loading best model on validation as final model.")
 
     # clear checkpoint
-    os.remove("./best_ckpt_{}_{}_{}.p".format(dataset, model_type, experiment_type))
+    os.remove("./best_ckpt_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
 
 # save model
-torch.save(model, "./bestModel_{}_{}_{}.p".format(dataset, model_type, experiment_type))
+torch.save(model, "./finalModel_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type_id))
 
 # plot history
 plot_history(epoch_history, end_epoch, dataset, model_type, experiment_type)
