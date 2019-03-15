@@ -9,7 +9,7 @@ from deeputils import training_epoch, evaluate, generate_parameter_lists, plot_h
 from datasetloaders import load_base_dataset, load_style_dataset, load_mixed_dataset
 import time
 from resnets import load_resnet_model
-from densenets import load_densenet_model
+from squeezenets import load_squeezenet_model
 import os
 import sys
 
@@ -27,7 +27,7 @@ else:
 conf = read_config(fname)
 
 dataset = conf["dataset"]  # DBI, DogsCats, Dice, Food101
-model_type = conf["model_type"]  # resnet or densenet
+model_type = conf["model_type"]  # resnet or squeezenet
 experiment_type = conf["experiment_type"]  # base, style, mixed
 id = conf["id"]
 
@@ -55,7 +55,7 @@ if model_type == "resnet":
     model = load_resnet_model(dataset)
     model.cuda()
 else:
-    model = load_densenet_model(dataset)
+    model = load_squeezenet_model(dataset)
     model.cuda()
 
 # define optimizer and loss
