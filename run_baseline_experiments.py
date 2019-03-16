@@ -79,7 +79,7 @@ model_i = 0
 
 logfile = open("{}_{}_{}_{}.log".format(dataset, model_type, experiment_type, id), "w")
 
-starttime_string = "Starting training at {}".format(time.time())
+starttime_string = "Starting training at {}".format(time.strftime("%H%M%S (%d%b)"))
 print(starttime_string)
 logfile.write(starttime_string)
 
@@ -151,7 +151,7 @@ if early_stopping:
 # save model
 torch.save(model, "./finalModel_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
 
-endtime_string = "Experiment ended at {}".format(time.time())
+endtime_string = "Experiment ended at {}".format(time.strftime("%H%M%S (%d%b)"))
 print(endtime_string)
 logfile.write(endtime_string)
 
