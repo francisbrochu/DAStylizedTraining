@@ -75,6 +75,13 @@ end_epoch = n_epochs
 
 epoch_history = [[], [], [], []]
 end_by_earlystop = False
+model_i = 0
+
+logfile = open("{}_{}_{}_{}.log".format(dataset, model_type, experiment_type, id), "w")
+
+starttime_string = "Starting training at {}".format(time.time())
+print(starttime_string)
+logfile.write(starttime_string)
 
 # train
 for i in range(n_epochs):
@@ -99,14 +106,17 @@ for i in range(n_epochs):
     epoch_history[2].append(avg_train_error)
     epoch_history[3].append(avg_valid_error)
 
+    epoch_string = "[-] Epoch {} in {} seconds : Training Loss = {}, Training Error = {}; " \
+                   "Validation Loss = {}, Validation Error = {} [-]".format(i+1,
+                                                                            round(end_time - start_time, 2),
+                                                                            round(avg_train_loss, 4),
+                                                                            round(avg_train_error * 100, 2),
+                                                                            round(avg_valid_loss, 4),
+                                                                            round(avg_valid_error * 100, 2))
+
     # print epoch info
-    print("[-] Epoch {} in {} seconds : Training Loss = {}, Training Error = {}; "
-          "Validation Loss = {}, Validation Error = {} [-]".format(i+1,
-                                                               round(end_time - start_time, 2),
-                                                               round(avg_train_loss, 4),
-                                                               round(avg_train_error * 100, 2),
-                                                               round(avg_valid_loss, 4),
-                                                               round(avg_valid_error * 100, 2)))
+    print(epoch_string)
+    logfile.write(epoch_string)
 
     # early stopping
     if early_stopping:
@@ -114,27 +124,38 @@ for i in range(n_epochs):
         if avg_valid_error < minimum_error:
             epoch_counter = 0
             minimum_error = avg_valid_error
+            model_i = i + 1
             torch.save(model, "./best_ckpt_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
         else:
             epoch_counter += 1
 
         if epoch_counter >= patience:
-            end_epoch = i + 1
-            print("Stopping early at epoch {}".format(end_epoch + 1))
+            earlystop_string = "Stopping early at epoch {}, using model of epoch {}".format(i + 1, model_i)
+            print(earlystop_string)
+            logfile.write(earlystop_string)
             model = torch.load("./best_ckpt_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
             end_by_earlystop = True
             break
 
 if early_stopping:
     if (not end_by_earlystop) and (epoch_history[3][-1] > minimum_error):
+        # load stored best model if it is better than the last scheduled epoch
         torch.load("./best_ckpt_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
-        print("Loading best model on validation as final model.")
+        chosenmodel_string = "Loading best model (epoch {}) on validation as final model.".format(model_i)
+        print(chosenmodel_string)
+        logfile.write(chosenmodel_string)
 
     # clear checkpoint
     os.remove("./best_ckpt_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
 
 # save model
 torch.save(model, "./finalModel_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
+
+endtime_string = "Experiment ended at {}".format(time.time())
+print(endtime_string)
+logfile.write(endtime_string)
+
+logfile.close()
 
 # plot history
 plot_history(epoch_history, end_epoch, dataset, model_type, experiment_type)
