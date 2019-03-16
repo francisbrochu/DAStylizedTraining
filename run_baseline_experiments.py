@@ -158,4 +158,4 @@ logfile.write(endtime_string)
 logfile.close()
 
 # plot history
-plot_history(epoch_history, end_epoch, dataset, model_type, experiment_type)
+plot_history(epoch_history, end_epoch, dataset, model_type, experiment_type, id)

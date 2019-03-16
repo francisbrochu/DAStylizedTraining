@@ -77,7 +77,7 @@ def generate_parameter_lists(model, model_type):
     return convs, lin
 
 
-def plot_history(history, end_epoch, dataset, model_type, experiment_type):
+def plot_history(history, end_epoch, dataset, model_type, experiment_type, id):
     epochs = list(range(end_epoch))
 
     fig = plt.figure()
@@ -94,7 +94,7 @@ def plot_history(history, end_epoch, dataset, model_type, experiment_type):
     subfig2.set_title("Error by epoch")
     subfig2.legend()
 
-    plt.savefig("history_{}_{}_{}.png".format(dataset, model_type, experiment_type))
+    plt.savefig("history_{}_{}_{}_{}.png".format(dataset, model_type, experiment_type, id))
     # plt.show()
 
 
