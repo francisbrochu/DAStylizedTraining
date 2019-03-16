@@ -95,7 +95,6 @@ def plot_history(history, end_epoch, dataset, model_type, experiment_type, id):
     subfig2.legend()
 
     plt.savefig("history_{}_{}_{}_{}.png".format(dataset, model_type, experiment_type, id))
-    # plt.show()
 
 
 def read_config(filename):

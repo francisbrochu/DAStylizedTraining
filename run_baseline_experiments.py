@@ -79,9 +79,9 @@ model_i = 0
 
 logfile = open("{}_{}_{}_{}.log".format(dataset, model_type, experiment_type, id), "w")
 
-starttime_string = "Starting training at {}".format(time.strftime("%H:%ML%S (%d %b)"))
+starttime_string = "Starting training at {}".format(time.strftime("%H:%M:%S (%d %b)"))
 print(starttime_string)
-logfile.write(starttime_string)
+logfile.write(starttime_string + "\n")
 
 # train
 for i in range(n_epochs):
@@ -106,6 +106,7 @@ for i in range(n_epochs):
     epoch_history[2].append(avg_train_error)
     epoch_history[3].append(avg_valid_error)
 
+    # print epoch info
     epoch_string = "[-] Epoch {} in {} seconds : Training Loss = {}, Training Error = {}; " \
                    "Validation Loss = {}, Validation Error = {} [-]".format(i+1,
                                                                             round(end_time - start_time, 2),
@@ -113,10 +114,8 @@ for i in range(n_epochs):
                                                                             round(avg_train_error * 100, 2),
                                                                             round(avg_valid_loss, 4),
                                                                             round(avg_valid_error * 100, 2))
-
-    # print epoch info
     print(epoch_string)
-    logfile.write(epoch_string)
+    logfile.write(epoch_string + "\n")
 
     # early stopping
     if early_stopping:
@@ -132,7 +131,8 @@ for i in range(n_epochs):
         if epoch_counter >= patience:
             earlystop_string = "Stopping early at epoch {}, using model of epoch {}".format(i + 1, model_i)
             print(earlystop_string)
-            logfile.write(earlystop_string)
+            logfile.write(earlystop_string + "\n")
+
             model = torch.load("./best_ckpt_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
             end_by_earlystop = True
             break
@@ -143,7 +143,7 @@ if early_stopping:
         torch.load("./best_ckpt_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
         chosenmodel_string = "Loading best model (epoch {}) on validation as final model.".format(model_i)
         print(chosenmodel_string)
-        logfile.write(chosenmodel_string)
+        logfile.write(chosenmodel_string + "\n")
 
     # clear checkpoint
     os.remove("./best_ckpt_{}_{}_{}_{}.p".format(dataset, model_type, experiment_type, id))
