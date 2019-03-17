@@ -10,6 +10,7 @@ from datasetloaders import load_base_dataset, load_style_dataset, load_mixed_dat
 import time
 from resnets import load_resnet_model
 from squeezenets import load_squeezenet_model
+from vggnets import load_vgg_model
 import os
 import sys
 
@@ -54,8 +55,11 @@ else:
 if model_type == "resnet":
     model = load_resnet_model(dataset)
     model.cuda()
-else:
+elif model_type == "squeezenet":
     model = load_squeezenet_model(dataset)
+    model.cuda()
+else:
+    model = load_vgg_model(dataset)
     model.cuda()
 
 # define optimizer and loss
