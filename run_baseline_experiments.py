@@ -83,7 +83,12 @@ model_i = 0
 logfile = open("{}_{}_{}_{}.log".format(dataset, model_type, experiment_type, id), "w")
 
 starttime_string = "Starting training at {}".format(time.strftime("%H:%M:%S (%d %b)"))
+info_string = "Starting experiment #{} on dataset {}, using {} architecture, on {} dataset".format(id, dataset,
+                                                                                                   model_type,
+                                                                                                   experiment_type)
+print(info_string)
 print(starttime_string)
+logfile.write(info_string + "\n")
 logfile.write(starttime_string + "\n")
 
 # train
