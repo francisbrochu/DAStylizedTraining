@@ -3,7 +3,6 @@ import torch.nn as nn
 import torchvision
 import torch.optim
 import numpy as np
-import matplotlib.pyplot as plt
 import torch.utils.data
 from deeputils import training_epoch, evaluate, generate_parameter_lists, plot_history, read_config
 from datasetloaders import load_base_dataset, load_style_dataset, load_mixed_dataset
