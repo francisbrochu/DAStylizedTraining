@@ -11,7 +11,6 @@ def load_base_dataset(dataset_name, batch_size=32, num_workers=3):
 
         train_transformer = torchvision.transforms.Compose([
             torchvision.transforms.RandomHorizontalFlip(0.5),
-            torchvision.transforms.ColorJitter(brightness=0.25, contrast=0.25, saturation=0.25, hue=0.25),
             torchvision.transforms.RandomChoice([torchvision.transforms.Resize((224, 224)),
                                                  torchvision.transforms.RandomResizedCrop(224,
                                                                                           scale=(0.5, 1.0)),
@@ -55,7 +54,6 @@ def load_base_dataset(dataset_name, batch_size=32, num_workers=3):
 
         train_transformer = torchvision.transforms.Compose([
             torchvision.transforms.RandomHorizontalFlip(0.5),
-            torchvision.transforms.ColorJitter(brightness=0.25, contrast=0.25, saturation=0.25, hue=0.25),
             torchvision.transforms.RandomChoice([torchvision.transforms.Resize((224, 224)),
                                                  torchvision.transforms.RandomResizedCrop(224,
                                                                                           scale=(0.33, 1.0)),
@@ -89,7 +87,6 @@ def load_style_dataset(dataset_name, batch_size=32, num_workers=3):
 
         train_transformer = torchvision.transforms.Compose([
             torchvision.transforms.RandomHorizontalFlip(0.5),
-            torchvision.transforms.ColorJitter(brightness=0.25, contrast=0.25, saturation=0.25, hue=0.25),
             torchvision.transforms.RandomChoice([torchvision.transforms.Resize((224, 224)),
                                                  torchvision.transforms.RandomResizedCrop(224,
                                                                                           scale=(0.5, 1.0))
@@ -126,7 +123,6 @@ def load_style_dataset(dataset_name, batch_size=32, num_workers=3):
 
         train_transformer = torchvision.transforms.Compose([
             torchvision.transforms.RandomHorizontalFlip(0.5),
-            torchvision.transforms.ColorJitter(brightness=0.25, contrast=0.25, saturation=0.25, hue=0.25),
             torchvision.transforms.RandomChoice([torchvision.transforms.Resize((224, 224)),
                                                  torchvision.transforms.RandomResizedCrop(224,
                                                                                           scale=(0.5, 1.0))
@@ -159,7 +155,6 @@ def load_mixed_dataset(dataset_name, batch_size=32, num_workers=3):
 
         train_base_transformer = torchvision.transforms.Compose([
             torchvision.transforms.RandomHorizontalFlip(0.5),
-            torchvision.transforms.ColorJitter(brightness=0.25, contrast=0.25, saturation=0.25, hue=0.25),
             torchvision.transforms.RandomChoice([torchvision.transforms.Resize((224, 224)),
                                                  torchvision.transforms.RandomResizedCrop(24,
                                                                                           scale=(0.5, 1.0)),
@@ -170,7 +165,6 @@ def load_mixed_dataset(dataset_name, batch_size=32, num_workers=3):
 
         train_style_transformer = torchvision.transforms.Compose([
             torchvision.transforms.RandomHorizontalFlip(0.5),
-            torchvision.transforms.ColorJitter(brightness=0.25, contrast=0.25, saturation=0.25, hue=0.25),
             torchvision.transforms.RandomChoice([torchvision.transforms.Resize((224, 224)),
                                                  torchvision.transforms.RandomResizedCrop(224,
                                                                                           scale=(0.5, 1.0))
@@ -234,7 +228,6 @@ def load_mixed_dataset(dataset_name, batch_size=32, num_workers=3):
 
         train_base_transformer = torchvision.transforms.Compose([
             torchvision.transforms.RandomHorizontalFlip(0.5),
-            torchvision.transforms.ColorJitter(brightness=0.25, contrast=0.25, saturation=0.25, hue=0.25),
             torchvision.transforms.RandomChoice([torchvision.transforms.Resize((224, 224)),
                                                  torchvision.transforms.Compose([
                                                      torchvision.transforms.RandomRotation(45),
@@ -249,7 +242,6 @@ def load_mixed_dataset(dataset_name, batch_size=32, num_workers=3):
 
         train_style_transformer = torchvision.transforms.Compose([
             torchvision.transforms.RandomHorizontalFlip(0.5),
-            torchvision.transforms.ColorJitter(brightness=0.25, contrast=0.25, saturation=0.25, hue=0.25),
             torchvision.transforms.RandomChoice([torchvision.transforms.Resize((224, 224)),
                                                  torchvision.transforms.RandomResizedCrop(224,
                                                                                           scale=(0.5, 1.0))
