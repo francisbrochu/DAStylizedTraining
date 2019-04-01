@@ -109,7 +109,7 @@ def read_config(filename):
     conf["experiment_type"] = cfg["Experiment"]["experiment_type"]
     conf["id"] = cfg["Experiment"]["id"]
 
-    conf["early_stopping"] = cfg.getboolean("Parameters", "early_stopping")  # TODO check
+    conf["early_stopping"] = cfg.getboolean("Parameters", "early_stopping")
     conf["patience"] = int(cfg["Parameters"]["patience"])
     conf["batch_size"] = int(cfg["Parameters"]["batch_size"])
     conf["learning_rate"] = float(cfg["Parameters"]["learning_rate"])
@@ -139,7 +139,7 @@ def read_da_config(filename):
     conf["model_type"] = cfg["Experiment"]["model_type"]
     conf["id"] = cfg["Experiment"]["id"]
 
-    conf["early_stopping"] = cfg.getboolean("Parameters", "early_stopping")  # TODO check
+    conf["early_stopping"] = cfg.getboolean("Parameters", "early_stopping")
     conf["patience"] = int(cfg["Parameters"]["patience"])
     conf["batch_size"] = int(cfg["Parameters"]["batch_size"])
     conf["learning_rate"] = float(cfg["Parameters"]["learning_rate"])
@@ -176,10 +176,12 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
         optimizer.zero_grad()
 
         predictions_class, predictions_domain = model(inputs)
-        classif_loss = criterion_classif(predictions_class, targets)  # todo fix targets
-        domain_loss = criterion_domain(predictions_domain, targets)  # todo
+        classif_loss = criterion_classif(predictions_class, targets[0])
+        domain_loss = criterion_domain(predictions_domain, targets[1])
 
-        classif_loss.backward()  # todo backward with multiple heads
+        loss = classif_loss + domain_loss
+
+        loss.backward()
         optimizer.step()
 
         classif_loss_history.append(classif_loss.item())
@@ -203,15 +205,15 @@ def evaluate_da(model, loader, criterion_classif, criterion_domain):
         targets = targets.cuda()
 
         predictions_classif, predictions_domain = model(inputs)
-        classif_loss = criterion_classif(predictions_classif, targets)  # TODO fix targets
-        domain_loss = criterion_domain(predictions_domain, targets)  # todo
+        classif_loss = criterion_classif(predictions_classif, targets[0])
+        domain_loss = criterion_domain(predictions_domain, targets[1])
 
         predictions_classif = predictions_classif.max(dim=1)[1]
         predictions_domain = predictions_domain.max(dim=1)[1]
 
         classif_loss_history.append(classif_loss.item())
         domain_loss_history.append(domain_loss.item())
-        error_classif_history.append(1. - accuracy_score(targets.cpu(), predictions_classif.cpu()))
-        error_domain_history.append(1. - accuracy_score(targets.cpu(), predictions_domain.cpu()))
+        error_classif_history.append(1. - accuracy_score(targets[0].cpu(), predictions_classif.cpu()))
+        error_domain_history.append(1. - accuracy_score(targets[1].cpu(), predictions_domain.cpu()))
 
     return classif_loss_history, domain_loss_history, error_classif_history, error_domain_history

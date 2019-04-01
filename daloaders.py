@@ -4,7 +4,15 @@ import torch.utils.data
 import numpy as np
 
 
-def load_dataset(dataset_name, batch_size=32, num_workers=3):
+def base_tagger(target):
+    return target, 0
+
+
+def style_tagger(target):
+    return target, 1
+
+
+def load_dataset(dataset_name, batch_size=32, num_workers=3):  # todo the function to assign 2 labels, 2 labels managing
 
     if dataset_name == "DBI":
         dataset_path = "dog-breed-identification/"
@@ -114,11 +122,15 @@ def load_dataset(dataset_name, batch_size=32, num_workers=3):
     basepath = "../data/" + dataset_path
     stylepath = "../data/stylized/" + dataset_path
 
-    base_train_dataset = torchvision.datasets.ImageFolder(basepath + "train/", transform=train_base_transformer)
-    base_valid_dataset = torchvision.datasets.ImageFolder(basepath + "val/", transform=valid_base_transformer)
+    base_train_dataset = torchvision.datasets.ImageFolder(basepath + "train/", transform=train_base_transformer,
+                                                          target_transform=base_tagger)
+    base_valid_dataset = torchvision.datasets.ImageFolder(basepath + "val/", transform=valid_base_transformer,
+                                                          target_transform=base_tagger)
 
-    style_train_dataset = torchvision.datasets.ImageFolder(stylepath + "train/", transform=train_style_transformer)
-    style_valid_dataset = torchvision.datasets.ImageFolder(stylepath + "val/", transform=valid_style_transformer)
+    style_train_dataset = torchvision.datasets.ImageFolder(stylepath + "train/", transform=train_style_transformer,
+                                                           target_transform=style_tagger)
+    style_valid_dataset = torchvision.datasets.ImageFolder(stylepath + "val/", transform=valid_style_transformer,
+                                                           target_transform=style_tagger)
 
     train_dataset = torch.utils.data.ConcatDataset([base_train_dataset, style_train_dataset])
     valid_dataset = torch.utils.data.ConcatDataset([base_valid_dataset, style_valid_dataset])
