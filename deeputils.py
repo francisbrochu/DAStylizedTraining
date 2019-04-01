@@ -8,6 +8,7 @@ import seaborn as sns
 import configparser
 import json
 
+
 def training_epoch(model, train_loader, optimizer, criterion, scheduler=None):
     loss_history = []
 
@@ -17,20 +18,20 @@ def training_epoch(model, train_loader, optimizer, criterion, scheduler=None):
         scheduler.step()
 
     for i, batch in enumerate(train_loader):
-         inputs, targets = batch
+        inputs, targets = batch
 
-         inputs = inputs.cuda()
-         targets = targets.cuda()
+        inputs = inputs.cuda()
+        targets = targets.cuda()
 
-         optimizer.zero_grad()
+        optimizer.zero_grad()
 
-         predictions = model(inputs)
-         loss = criterion(predictions, targets)
+        predictions = model(inputs)
+        loss = criterion(predictions, targets)
 
-         loss.backward()
-         optimizer.step()
+        loss.backward()
+        optimizer.step()
 
-         loss_history.append(loss.item())
+        loss_history.append(loss.item())
 
     return loss_history
 
@@ -117,6 +118,7 @@ def read_config(filename):
     conf["n_epochs"] = int(cfg["Parameters"]["n_epochs"])
     conf["n_workers"] = int(cfg["Parameters"]["n_workers"])
     conf["gamma"] = float(cfg["Parameters"]["gamma"])
+    conf["c_param"] = float(cfg["Parameters"]["c_param"])
 
     epochs_list = []
     if cfg.getboolean("Parameters", "scheduler"):
@@ -125,3 +127,91 @@ def read_config(filename):
     conf["epochs_list"] = epochs_list
 
     return conf
+
+
+def read_da_config(filename):
+    conf = {}
+
+    cfg = configparser.ConfigParser()
+    cfg.read(filename)
+
+    conf["dataset"] = cfg["Experiment"]["dataset"]
+    conf["model_type"] = cfg["Experiment"]["model_type"]
+    conf["id"] = cfg["Experiment"]["id"]
+
+    conf["early_stopping"] = cfg.getboolean("Parameters", "early_stopping")  # TODO check
+    conf["patience"] = int(cfg["Parameters"]["patience"])
+    conf["batch_size"] = int(cfg["Parameters"]["batch_size"])
+    conf["learning_rate"] = float(cfg["Parameters"]["learning_rate"])
+    conf["classif_lr"] = float(cfg["Parameters"]["classif_lr"])
+    conf["weight_decay"] = float(cfg["Parameters"]["weight_decay"])
+    conf["n_epochs"] = int(cfg["Parameters"]["n_epochs"])
+    conf["n_workers"] = int(cfg["Parameters"]["n_workers"])
+    conf["gamma"] = float(cfg["Parameters"]["gamma"])
+
+    epochs_list = []
+    if cfg.getboolean("Parameters", "scheduler"):
+        epochs_list = json.loads(cfg.get("Scheduler", "epochs_list"))
+
+    conf["epochs_list"] = epochs_list
+
+    return conf
+
+
+def training_da_epoch(model, train_loader, optimizer, criterion_classif, criterion_domain, scheduler=None):
+    classif_loss_history = []
+    domain_loss_history = []
+
+    model.train()
+
+    if scheduler is not None:
+        scheduler.step()
+
+    for i, batch in enumerate(train_loader):
+        inputs, targets = batch
+
+        inputs = inputs.cuda()
+        targets = targets.cuda()
+
+        optimizer.zero_grad()
+
+        predictions_class, predictions_domain = model(inputs)
+        classif_loss = criterion_classif(predictions_class, targets)  # todo fix targets
+        domain_loss = criterion_domain(predictions_domain, targets)  # todo
+
+        classif_loss.backward()  # todo backward with multiple heads
+        optimizer.step()
+
+        classif_loss_history.append(classif_loss.item())
+        domain_loss_history.append(domain_loss.item())
+
+    return classif_loss_history, domain_loss_history
+
+
+def evaluate_da(model, loader, criterion_classif, criterion_domain):
+    classif_loss_history = []
+    domain_loss_history = []
+    error_classif_history = []
+    error_domain_history = []
+
+    model.eval()
+
+    for i, batch in enumerate(loader):
+        inputs, targets = batch
+
+        inputs = inputs.cuda()
+        targets = targets.cuda()
+
+        predictions_classif, predictions_domain = model(inputs)
+        classif_loss = criterion_classif(predictions_classif, targets)  # TODO fix targets
+        domain_loss = criterion_domain(predictions_domain, targets)  # todo
+
+        predictions_classif = predictions_classif.max(dim=1)[1]
+        predictions_domain = predictions_domain.max(dim=1)[1]
+
+        classif_loss_history.append(classif_loss.item())
+        domain_loss_history.append(domain_loss.item())
+        error_classif_history.append(1. - accuracy_score(targets.cpu(), predictions_classif.cpu()))
+        error_domain_history.append(1. - accuracy_score(targets.cpu(), predictions_domain.cpu()))
+
+    return classif_loss_history, domain_loss_history, error_classif_history, error_domain_history
