@@ -64,13 +64,14 @@ def generate_parameter_lists(model, model_type):
     lin = []
     if model_type == "resnet":
         for name, param in model.model.named_parameters():
-            if name in {"fc.weight", "fc.bias"}:
+            if name in {"model.fc.weight", "model.fc.bias", "domainfc.weight", "domainfc.bias"}:
                 lin.append(param)
             else:
                 convs.append(param)
     else:  # densenet
         for name, param in model.model.named_parameters():
-            if name in {"classifier.weight", "classifier.bias"}:
+            if name in {"model.classifier.1.weight", "model.classifier.1.bias",
+                        "final_conv_domain.weight", "final_conv_domain.bias"}:
                 lin.append(param)
             else:
                 convs.append(param)

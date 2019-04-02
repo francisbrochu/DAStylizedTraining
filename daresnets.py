@@ -41,7 +41,7 @@ class DBIResNet(nn.Module):
 # for Dogs vs Cats
 class DCResNet(nn.Module):
 
-    def __init__(self):
+    def __init__(self, c=1.0):
         super(DCResNet, self).__init__()
 
         self.model = torchvision.models.resnet34(pretrained=True)

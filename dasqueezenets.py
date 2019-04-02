@@ -63,7 +63,7 @@ class DCSqueezeNet(nn.Module):
 
 
 # for dice
-class DiceSqueezeeNet(nn.Module):
+class DiceSqueezeNet(nn.Module):
 
     def __init__(self, c=1.0):
         super(DiceSqueezeeNet, self).__init__()
@@ -129,7 +129,7 @@ def load_squeezenet_model(dataset_name, c=1.0):
         return DCSqueezeNet(c=c)
 
     elif dataset_name == "Dice":
-        return DiceSqueezeeNet(c=c)
+        return DiceSqueezeNet(c=c)
 
     else:
         return Food101SqueezeNet(c=c)
