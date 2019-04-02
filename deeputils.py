@@ -118,7 +118,6 @@ def read_config(filename):
     conf["n_epochs"] = int(cfg["Parameters"]["n_epochs"])
     conf["n_workers"] = int(cfg["Parameters"]["n_workers"])
     conf["gamma"] = float(cfg["Parameters"]["gamma"])
-    conf["c_param"] = float(cfg["Parameters"]["c_param"])
 
     epochs_list = []
     if cfg.getboolean("Parameters", "scheduler"):
@@ -148,6 +147,7 @@ def read_da_config(filename):
     conf["n_epochs"] = int(cfg["Parameters"]["n_epochs"])
     conf["n_workers"] = int(cfg["Parameters"]["n_workers"])
     conf["gamma"] = float(cfg["Parameters"]["gamma"])
+    conf["c_param"] = float(cfg["Parameters"]["c_param"])
 
     epochs_list = []
     if cfg.getboolean("Parameters", "scheduler"):
