@@ -37,7 +37,7 @@ class DCSqueezeNet(nn.Module):
 class DiceSqueezeNet(nn.Module):
 
     def __init__(self):
-        super(DiceSqueezeeNet, self).__init__()
+        super(DiceSqueezeNet, self).__init__()
 
         self.model = torchvision.models.squeezenet1_1(pretrained=True)
         self.model.num_classes = 6
