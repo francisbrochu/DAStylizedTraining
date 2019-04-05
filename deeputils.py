@@ -207,6 +207,10 @@ def evaluate_da(model, loader):
         ctargets = targets[0]
         dtargets = targets[1]
 
+        print("Actual Targets:")
+        print(ctargets)
+        print(dtargets)
+
         inputs = inputs.cuda()
         ctargets = ctargets.cuda()
         dtargets = dtargets.cuda()
@@ -215,6 +219,10 @@ def evaluate_da(model, loader):
 
         predictions_classif = predictions_classif.max(dim=1)[1]
         predictions_domain = predictions_domain.max(dim=1)[1]
+
+        print("Predicted")
+        print(predictions_classif)
+        print(predictions_domain)
 
         error_classif_history.append(1. - accuracy_score(ctargets.cpu(), predictions_classif.cpu()))
         error_domain_history.append(1. - accuracy_score(dtargets.cpu(), predictions_domain.cpu()))
