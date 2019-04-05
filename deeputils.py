@@ -171,14 +171,18 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
     for i, batch in enumerate(train_loader):
         inputs, targets = batch
 
+        ctargets = targets[0]
+        dtargets = targets[1]
+
         inputs = inputs.cuda()
-        targets = targets.cuda()
+        ctargets = ctargets.cuda()
+        dtargets = dtargets.cuda()
 
         optimizer.zero_grad()
 
         predictions_class, predictions_domain = model(inputs)
-        classif_loss = criterion_classif(predictions_class, targets[0])
-        domain_loss = criterion_domain(predictions_domain, targets[1])
+        classif_loss = criterion_classif(predictions_class, ctargets)
+        domain_loss = criterion_domain(predictions_domain, dtargets)
 
         loss = classif_loss + domain_loss
 
@@ -202,8 +206,12 @@ def evaluate_da(model, loader, criterion_classif, criterion_domain):
     for i, batch in enumerate(loader):
         inputs, targets = batch
 
+        ctargets = targets[0]
+        dtargets = targets[1]
+
         inputs = inputs.cuda()
-        targets = targets.cuda()
+        ctargets = ctargets.cuda()
+        dtargets = dtargets.cuda()
 
         predictions_classif, predictions_domain = model(inputs)
         classif_loss = criterion_classif(predictions_classif, targets[0])
@@ -214,7 +222,7 @@ def evaluate_da(model, loader, criterion_classif, criterion_domain):
 
         classif_loss_history.append(classif_loss.item())
         domain_loss_history.append(domain_loss.item())
-        error_classif_history.append(1. - accuracy_score(targets[0].cpu(), predictions_classif.cpu()))
-        error_domain_history.append(1. - accuracy_score(targets[1].cpu(), predictions_domain.cpu()))
+        error_classif_history.append(1. - accuracy_score(ctargets.cpu(), predictions_classif.cpu()))
+        error_domain_history.append(1. - accuracy_score(dtargets.cpu(), predictions_domain.cpu()))
 
     return classif_loss_history, domain_loss_history, error_classif_history, error_domain_history
