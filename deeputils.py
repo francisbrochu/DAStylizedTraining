@@ -214,8 +214,8 @@ def evaluate_da(model, loader, criterion_classif, criterion_domain):
         dtargets = dtargets.cuda()
 
         predictions_classif, predictions_domain = model(inputs)
-        classif_loss = criterion_classif(predictions_classif, targets[0])
-        domain_loss = criterion_domain(predictions_domain, targets[1])
+        classif_loss = criterion_classif(predictions_classif, ctargets)
+        domain_loss = criterion_domain(predictions_domain, dtargets)
 
         predictions_classif = predictions_classif.max(dim=1)[1]
         predictions_domain = predictions_domain.max(dim=1)[1]
