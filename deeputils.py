@@ -195,7 +195,7 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
     return classif_loss_history, domain_loss_history
 
 
-def evaluate_da(model, loader, criterion_classif, criterion_domain):
+def evaluate_da(model, loader): # criterion_classif, criterion_domain):
     classif_loss_history = []
     domain_loss_history = []
     error_classif_history = []
