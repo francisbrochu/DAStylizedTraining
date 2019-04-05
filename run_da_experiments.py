@@ -102,10 +102,10 @@ for i in range(n_epochs):
     avg_train_domain_error = np.mean(train_domain_error)
     avg_valid_domain_error = np.mean(val_domain_error)
 
-    epoch_history[4].append(avg_train_classif_error)
-    epoch_history[5].append(avg_train_domain_error)
-    epoch_history[6].append(avg_valid_classif_error)
-    epoch_history[7].append(avg_valid_domain_error)
+    epoch_history[0].append(avg_train_classif_error)
+    epoch_history[1].append(avg_train_domain_error)
+    epoch_history[2].append(avg_valid_classif_error)
+    epoch_history[3].append(avg_valid_domain_error)
 
     # print epoch info
     epoch_string = "[-] Epoch {} in {} seconds : " \
