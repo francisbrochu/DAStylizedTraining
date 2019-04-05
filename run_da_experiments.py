@@ -122,7 +122,8 @@ for i in range(n_epochs):
     epoch_history[7].append(avg_valid_domain_error)
 
     # print epoch info
-    epoch_string = "[-] Epoch {} in {} seconds :" \ #Training Loss = {}, " \
+    # Training Loss = {}, " \
+    epoch_string = "[-] Epoch {} in {} seconds : " \ 
                    "Training Error for Classification = {}, " \
                    "Training Error for Domain = {}; " \
                    #"Validation Loss = {}, " \
