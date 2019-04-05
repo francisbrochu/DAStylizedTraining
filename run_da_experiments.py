@@ -90,16 +90,10 @@ for i in range(n_epochs):
     _, _ = training_da_epoch(model, train_loader, optimizer, criterion_classif, criterion_domain, scheduler)
 
     # evaluate on training set
-    train_classif_error, train_domain_error, rt = evaluate_da(model, train_loader)
-
-    print("Train eval:")
-    print(rt)
+    train_classif_error, train_domain_error = evaluate_da(model, train_loader)
 
     # evaluate on validation set
-    val_classif_error, val_domain_error, rt = evaluate_da(model, validation_loader)
-
-    print("Val eval")
-    print(rt)
+    val_classif_error, val_domain_error = evaluate_da(model, validation_loader)
 
     end_time = time.time()
 
