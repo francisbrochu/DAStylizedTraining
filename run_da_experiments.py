@@ -123,10 +123,10 @@ for i in range(n_epochs):
 
     # print epoch info
     # Training Loss = {}, " \
+    # "Validation Loss = {}, " \
     epoch_string = "[-] Epoch {} in {} seconds : " \ 
                    "Training Error for Classification = {}, " \
                    "Training Error for Domain = {}; " \
-                   #"Validation Loss = {}, " \
                    "Validation Error for Classification = {}, " \
                    "Validation Error for Domain = {} [-]".format(i + 1,
                                                                  round(end_time - start_time, 2),
