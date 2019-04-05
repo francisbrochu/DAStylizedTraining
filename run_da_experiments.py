@@ -124,7 +124,7 @@ for i in range(n_epochs):
     # print epoch info
     # Training Loss = {}, " \
     # "Validation Loss = {}, " \
-    epoch_string = "[-] Epoch {} in {} seconds : " \ 
+    epoch_string = "[-] Epoch {} in {} seconds : " \
                    "Training Error for Classification = {}, " \
                    "Training Error for Domain = {}; " \
                    "Validation Error for Classification = {}, " \
