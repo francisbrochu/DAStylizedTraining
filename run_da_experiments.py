@@ -91,15 +91,11 @@ for i in range(n_epochs):
 
     # evaluate on training set
     #train_classif_loss, train_domain_loss, train_classif_error, train_domain_error = evaluate_da(model, train_loader,
-    train_classif_error, train_domain_error = evaluate_da(model, train_loader,
-                                                                                                 criterion_classif,
-                                                                                                 criterion_domain)
+    train_classif_error, train_domain_error = evaluate_da(model, train_loader) # ,criterion_classif, criterion_domain)
 
     # evaluate on validation set
     #val_classif_loss, val_domain_loss, val_classif_error, val_domain_error = evaluate_da(model, validation_loader,
-    val_classif_error, val_domain_error = evaluate_da(model, validation_loader,
-                                                                                         criterion_classif,
-                                                                                         criterion_domain)
+    val_classif_error, val_domain_error = evaluate_da(model, validation_loader) # ,criterion_classif, criterion_domain)
 
     end_time = time.time()
 
