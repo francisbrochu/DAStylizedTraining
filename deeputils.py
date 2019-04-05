@@ -214,15 +214,16 @@ def evaluate_da(model, loader, criterion_classif, criterion_domain):
         dtargets = dtargets.cuda()
 
         predictions_classif, predictions_domain = model(inputs)
-        classif_loss = criterion_classif(predictions_classif, ctargets)
-        domain_loss = criterion_domain(predictions_domain, dtargets)
+        #classif_loss = criterion_classif(predictions_classif, ctargets)
+        #domain_loss = criterion_domain(predictions_domain, dtargets)
 
         predictions_classif = predictions_classif.max(dim=1)[1]
         predictions_domain = predictions_domain.max(dim=1)[1]
 
-        classif_loss_history.append(classif_loss.item())
-        domain_loss_history.append(domain_loss.item())
+        #classif_loss_history.append(classif_loss.item())
+        #domain_loss_history.append(domain_loss.item())
         error_classif_history.append(1. - accuracy_score(ctargets.cpu(), predictions_classif.cpu()))
         error_domain_history.append(1. - accuracy_score(dtargets.cpu(), predictions_domain.cpu()))
 
-    return classif_loss_history, domain_loss_history, error_classif_history, error_domain_history
+    #return classif_loss_history, domain_loss_history, error_classif_history, error_domain_history
+    return error_classif_history, error_domain_history

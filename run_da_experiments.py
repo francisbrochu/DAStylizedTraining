@@ -90,43 +90,49 @@ for i in range(n_epochs):
     _, _ = training_da_epoch(model, train_loader, optimizer, criterion_classif, criterion_domain, scheduler)
 
     # evaluate on training set
-    train_classif_loss, train_domain_loss, train_classif_error, train_domain_error = evaluate_da(model, train_loader,
+    #train_classif_loss, train_domain_loss, train_classif_error, train_domain_error = evaluate_da(model, train_loader,
+    train_classif_error, train_domain_error = evaluate_da(model, train_loader,
                                                                                                  criterion_classif,
                                                                                                  criterion_domain)
 
     # evaluate on validation set
-    val_classif_loss, val_domain_loss, val_classif_error, val_domain_error = evaluate_da(model, validation_loader,
+    #val_classif_loss, val_domain_loss, val_classif_error, val_domain_error = evaluate_da(model, validation_loader,
+    val_classif_error, val_domain_error = evaluate_da(model, validation_loader,
                                                                                          criterion_classif,
                                                                                          criterion_domain)
 
     end_time = time.time()
 
-    avg_train_classif_loss, avg_train_classif_error = np.mean(train_classif_loss), np.mean(train_classif_error)
-    avg_valid_classif_loss, avg_valid_classif_error = np.mean(val_classif_loss), np.mean(val_classif_error)
-    avg_train_domain_loss, avg_train_domain_error = np.mean(train_domain_loss), np.mean(train_domain_error)
-    avg_valid_domain_loss, avg_valid_domain_error = np.mean(val_domain_loss), np.mean(val_domain_error)
+    #avg_train_classif_loss, avg_train_classif_error = np.mean(train_classif_loss), np.mean(train_classif_error)
+    #avg_valid_classif_loss, avg_valid_classif_error = np.mean(val_classif_loss), np.mean(val_classif_error)
+    #avg_train_domain_loss, avg_train_domain_error = np.mean(train_domain_loss), np.mean(train_domain_error)
+    #avg_valid_domain_loss, avg_valid_domain_error = np.mean(val_domain_loss), np.mean(val_domain_error)
+    avg_train_classif_error = np.mean(train_classif_error)
+    avg_valid_classif_error = np.mean(val_classif_error)
+    avg_train_domain_error = np.mean(train_domain_error)
+    avg_valid_domain_error = np.mean(val_domain_error)
 
-    epoch_history[0].append(avg_train_classif_loss)
-    epoch_history[1].append(avg_train_domain_loss)
-    epoch_history[2].append(avg_valid_classif_loss)
-    epoch_history[3].append(avg_valid_domain_loss)
+    #epoch_history[0].append(avg_train_classif_loss)
+    #epoch_history[1].append(avg_train_domain_loss)
+    #epoch_history[2].append(avg_valid_classif_loss)
+    #epoch_history[3].append(avg_valid_domain_loss)
     epoch_history[4].append(avg_train_classif_error)
     epoch_history[5].append(avg_train_domain_error)
     epoch_history[6].append(avg_valid_classif_error)
     epoch_history[7].append(avg_valid_domain_error)
 
     # print epoch info
-    epoch_string = "[-] Epoch {} in {} seconds : Training Loss = {}, " \
+    epoch_string = "[-] Epoch {} in {} seconds :" \ #Training Loss = {}, " \
                    "Training Error for Classification = {}, " \
                    "Training Error for Domain = {}; " \
-                   "Validation Loss = {}, " \
+                   #"Validation Loss = {}, " \
                    "Validation Error for Classification = {}, " \
                    "Validation Error for Domain = {} [-]".format(i + 1,
                                                                  round(end_time - start_time, 2),
-                                                                 round(avg_train_classif_loss, 4),
+                                                                 #round(avg_train_classif_loss, 4),
                                                                  round(avg_train_classif_error * 100, 2),
                                                                  round(avg_train_domain_error * 100, 2),
-                                                                 round(avg_valid_classif_loss, 4),
+                                                                 #round(avg_valid_classif_loss, 4),
                                                                  round(avg_valid_classif_error * 100, 2),
                                                                  round(avg_valid_domain_error * 100, 2))
     print(epoch_string)
