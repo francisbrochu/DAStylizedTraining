@@ -55,8 +55,8 @@ else:
 # define optimizer and loss
 # generate the parameter lists first
 convolutions, linear = generate_parameter_lists(model, model_type)
-optimizer = torch.optim.SGD([{"params": convolutions},
-                             {"params": linear, "lr": classif_lr}], lr=learning_rate, weight_decay=weight_decay)
+optimizer = torch.optim.Adam([{"params": convolutions},
+                              {"params": linear, "lr": classif_lr}], lr=learning_rate, weight_decay=weight_decay)
 criterion_classif = nn.CrossEntropyLoss()
 criterion_domain = nn.CrossEntropyLoss()
 
