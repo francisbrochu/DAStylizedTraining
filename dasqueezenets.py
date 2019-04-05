@@ -15,7 +15,7 @@ class DBISqueezeNet(nn.Module):
         input_fc_dim = self.model.classifier[1].in_channels
         self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
-        self.final_conv_domain = nn.Conv2d(512, 2, kernel_size=1)
+        self.final_conv_domain = nn.Conv2d(input_fc_dim, 2, kernel_size=1)
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(c=c),
             nn.Dropout(p=0.5),
@@ -44,7 +44,7 @@ class DCSqueezeNet(nn.Module):
         input_fc_dim = self.model.classifier[1].in_channels
         self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
-        self.final_conv_domain = nn.Conv2d(512, 2, kernel_size=1)
+        self.final_conv_domain = nn.Conv2d(input_fc_dim, 2, kernel_size=1)
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(c=c),
             nn.Dropout(p=0.5),
@@ -73,7 +73,7 @@ class DiceSqueezeNet(nn.Module):
         input_fc_dim = self.model.classifier[1].in_channels
         self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
-        self.final_conv_domain = nn.Conv2d(512, 2, kernel_size=1)
+        self.final_conv_domain = nn.Conv2d(input_fc_dim, 2, kernel_size=1)
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(c=c),
             nn.Dropout(p=0.5),
@@ -102,7 +102,7 @@ class Food101SqueezeNet(nn.Module):
         input_fc_dim = self.model.classifier[1].in_channels
         self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
-        self.final_conv_domain = nn.Conv2d(512, 2, kernel_size=1)
+        self.final_conv_domain = nn.Conv2d(input_fc_dim, 2, kernel_size=1)
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(c=c),
             nn.Dropout(p=0.5),
