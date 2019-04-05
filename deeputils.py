@@ -198,6 +198,7 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
 def evaluate_da(model, loader):
     error_classif_history = []
     error_domain_history = []
+    rt = []
 
     model.eval()
 
@@ -207,9 +208,9 @@ def evaluate_da(model, loader):
         ctargets = targets[0]
         dtargets = targets[1]
 
-        print("Actual Targets:")
-        print(ctargets)
-        print(dtargets)
+        if i == 0:
+            rt.append(ctargets)
+            rt.append(dtargets)
 
         inputs = inputs.cuda()
         ctargets = ctargets.cuda()
@@ -220,11 +221,11 @@ def evaluate_da(model, loader):
         predictions_classif = predictions_classif.max(dim=1)[1]
         predictions_domain = predictions_domain.max(dim=1)[1]
 
-        print("Predicted")
-        print(predictions_classif)
-        print(predictions_domain)
+        if i == 0:
+            rt.append(predictions_classif)
+            rt.append(predictions_domain)
 
         error_classif_history.append(1. - accuracy_score(ctargets.cpu(), predictions_classif.cpu()))
         error_domain_history.append(1. - accuracy_score(dtargets.cpu(), predictions_domain.cpu()))
 
-    return error_classif_history, error_domain_history
+    return error_classif_history, error_domain_history, rt
