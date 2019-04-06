@@ -214,9 +214,20 @@ def evaluate_da(model, loader):
         predictions_classif, predictions_domain = model(inputs)
 
         predictions_classif = predictions_classif.max(dim=1)[1]
-        predictions_domain = predictions_domain.max(dim=1)[1]
+        predictions_domain = binarize_predictions(predictions_domain)
 
         error_classif_history.append(1. - accuracy_score(ctargets.cpu(), predictions_classif.cpu()))
-        error_domain_history.append(1. - accuracy_score(dtargets.cpu(), predictions_domain.cpu()))
+        error_domain_history.append(1. - accuracy_score(dtargets.cpu(), predictions_domain))
 
     return error_classif_history, error_domain_history
+
+
+def binarize_predictions(predictions):
+    pred = []
+    for val in pred:
+        if val >= 0.5:
+            pred.append(1)
+        else:
+            pred.append(0)
+
+    return np.asarray(pred)

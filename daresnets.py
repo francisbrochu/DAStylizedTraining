@@ -15,7 +15,7 @@ class DBIResNet(nn.Module):
         self.model.fc = nn.Linear(input_fc_dim, 120)
 
         self.grl = GradientReversalLayer(c=c)
-        self.domainfc = nn.Linear(input_fc_dim, 2)
+        self.domainfc = nn.Linear(input_fc_dim, 1)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -49,7 +49,7 @@ class DCResNet(nn.Module):
         self.model.fc = nn.Linear(input_fc_dim, 2)
 
         self.grl = GradientReversalLayer(c=c)
-        self.domainfc = nn.Linear(input_fc_dim, 2)
+        self.domainfc = nn.Linear(input_fc_dim, 1)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -83,7 +83,7 @@ class DiceResNet(nn.Module):
         self.model.fc = nn.Linear(input_fc_dim, 6)
 
         self.grl = GradientReversalLayer(c=c)
-        self.domainfc = nn.Linear(input_fc_dim, 2)
+        self.domainfc = nn.Linear(input_fc_dim, 1)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -117,7 +117,7 @@ class Food101ResNet(nn.Module):
         self.model.fc = nn.Linear(input_fc_dim, 101)
 
         self.grl = GradientReversalLayer(c=c)
-        self.domainfc = nn.Linear(input_fc_dim, 2)
+        self.domainfc = nn.Linear(input_fc_dim, 1)
 
     def forward(self, x):
         output = self.model.conv1(x)
