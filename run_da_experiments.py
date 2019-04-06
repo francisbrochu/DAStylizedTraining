@@ -58,7 +58,7 @@ convolutions, linear = generate_parameter_lists(model, model_type)
 optimizer = torch.optim.Adam([{"params": convolutions},
                               {"params": linear, "lr": classif_lr}], lr=learning_rate, weight_decay=weight_decay)
 criterion_classif = nn.CrossEntropyLoss()
-criterion_domain = nn.BCELoss()
+criterion_domain = nn.CrossEntropyLoss()
 
 # scheduling options
 scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=epochs_list, gamma=conf["gamma"])

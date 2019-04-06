@@ -18,7 +18,7 @@ class DBISqueezeNet(nn.Module):
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(),
             nn.Dropout(p=0.5),
-            nn.Conv2d(input_fc_dim, 1, kernel_size=1),
+            nn.Conv2d(input_fc_dim, 2, kernel_size=1),
             nn.ReLU(inplace=True),
             nn.AdaptiveAvgPool2d((1, 1)),
             LambdaLayer(lambda_param=lambda_param)
@@ -47,7 +47,7 @@ class DCSqueezeNet(nn.Module):
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(),
             nn.Dropout(p=0.5),
-            nn.Conv2d(input_fc_dim, 1, kernel_size=1),
+            nn.Conv2d(input_fc_dim, 2, kernel_size=1),
             nn.ReLU(inplace=True),
             nn.AdaptiveAvgPool2d((1, 1)),
             LambdaLayer(lambda_param=lambda_param)
@@ -76,7 +76,7 @@ class DiceSqueezeNet(nn.Module):
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(),
             nn.Dropout(p=0.5),
-            nn.Conv2d(input_fc_dim, 1, kernel_size=1),
+            nn.Conv2d(input_fc_dim, 2, kernel_size=1),
             nn.ReLU(inplace=True),
             nn.AdaptiveAvgPool2d((1, 1)),
             LambdaLayer(lambda_param==lambda_param)
@@ -105,7 +105,7 @@ class Food101SqueezeNet(nn.Module):
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(),
             nn.Dropout(p=0.5),
-            nn.Conv2d(input_fc_dim, 1, kernel_size=1),
+            nn.Conv2d(input_fc_dim, 2, kernel_size=1),
             nn.ReLU(inplace=True),
             nn.AdaptiveAvgPool2d((1, 1)),
             LambdaLayer(lambda_param=lambda_param)

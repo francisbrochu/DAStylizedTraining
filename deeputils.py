@@ -171,7 +171,7 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
         inputs, targets = batch
 
         ctargets = targets[0]
-        dtargets = targets[1].float()
+        dtargets = targets[1]
 
         inputs = inputs.cuda()
         ctargets = ctargets.cuda()
@@ -213,20 +213,9 @@ def evaluate_da(model, loader):
         predictions_classif, predictions_domain = model(inputs)
 
         predictions_classif = predictions_classif.max(dim=1)[1]
-        predictions_domain = binarize_predictions(predictions_domain)
+        predictions_domain = predictions_domain.max(dim=1)[1]
 
         error_classif_history.append(1. - accuracy_score(ctargets.cpu(), predictions_classif.cpu()))
-        error_domain_history.append(1. - accuracy_score(dtargets.cpu(), predictions_domain))
+        error_domain_history.append(1. - accuracy_score(dtargets.cpu(), predictions_domain.cpu()))
 
     return error_classif_history, error_domain_history
-
-
-def binarize_predictions(predictions):
-    pred = []
-    for val in predictions:
-        if val >= 0.5:
-            pred.append(1)
-        else:
-            pred.append(0)
-
-    return np.asarray(pred)
