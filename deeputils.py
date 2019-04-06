@@ -224,7 +224,7 @@ def evaluate_da(model, loader):
 
 def binarize_predictions(predictions):
     pred = []
-    for val in pred:
+    for val in predictions:
         if val >= 0.5:
             pred.append(1)
         else:
