@@ -5,11 +5,11 @@ import numpy as np
 
 
 def base_tagger(target):
-    return target, 0
+    return target, 0.
 
 
 def style_tagger(target):
-    return target, 1
+    return target, 1.
 
 
 def load_dataset(dataset_name, batch_size=32, num_workers=3):  # todo the function to assign 2 labels, 2 labels managing
