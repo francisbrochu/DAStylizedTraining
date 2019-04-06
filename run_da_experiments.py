@@ -38,7 +38,7 @@ classif_lr = conf["classif_lr"]
 weight_decay = conf["weight_decay"]
 n_epochs = conf["n_epochs"]
 num_workers = conf["n_workers"]
-c_param = conf["c_param"]
+lambda_param = conf["lambda_param"]
 
 epochs_list = conf["epochs_list"]
 
@@ -46,10 +46,10 @@ train_loader, validation_loader = load_dataset(dataset, batch_size=batch_size, n
 
 # define model
 if model_type == "resnet":
-    model = load_resnet_model(dataset, c_param)
+    model = load_resnet_model(dataset, lambda_param)
     model.cuda()
 else:
-    model = load_squeezenet_model(dataset, c_param)
+    model = load_squeezenet_model(dataset, lambda_param)
     model.cuda()
 
 # define optimizer and loss

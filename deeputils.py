@@ -64,14 +64,13 @@ def generate_parameter_lists(model, model_type):
     lin = []
     if model_type == "resnet":
         for name, param in model.model.named_parameters():
-            if name in {"model.fc.weight", "model.fc.bias", "domainfc.weight", "domainfc.bias"}:
+            if name in {"model.fc.weight", "model.fc.bias"}:
                 lin.append(param)
             else:
                 convs.append(param)
     else:  # densenet
         for name, param in model.model.named_parameters():
-            if name in {"model.classifier.1.weight", "model.classifier.1.bias",
-                        "final_conv_domain.weight", "final_conv_domain.bias"}:
+            if name in {"model.classifier.1.weight", "model.classifier.1.bias"}:
                 lin.append(param)
             else:
                 convs.append(param)
@@ -148,7 +147,7 @@ def read_da_config(filename):
     conf["n_epochs"] = int(cfg["Parameters"]["n_epochs"])
     conf["n_workers"] = int(cfg["Parameters"]["n_workers"])
     conf["gamma"] = float(cfg["Parameters"]["gamma"])
-    conf["c_param"] = float(cfg["Parameters"]["c_param"])
+    conf["lambda_param"] = float(cfg["Parameters"]["lambda_param"])
 
     epochs_list = []
     if cfg.getboolean("Parameters", "scheduler"):

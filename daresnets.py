@@ -1,21 +1,22 @@
 import torch
 import torch.nn as nn
 import torchvision
-from grl import GradientReversalLayer
+from grl import GradientReversalLayer, LambdaLayer
 
 
 # for dog breed identification
 class DBIResNet(nn.Module):
 
-    def __init__(self, c=1.0):
+    def __init__(self, lambda_param=0.1):
         super(DBIResNet, self).__init__()
 
         self.model = torchvision.models.resnet34(pretrained=True)
         input_fc_dim = self.model.fc.in_features
         self.model.fc = nn.Linear(input_fc_dim, 120)
 
-        self.grl = GradientReversalLayer(c=c)
+        self.grl = GradientReversalLayer()
         self.domainfc = nn.Linear(input_fc_dim, 1)
+        self.ll = LambdaLayer(lambda_param=lambda_param)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -34,6 +35,7 @@ class DBIResNet(nn.Module):
 
         domain_output = self.grl(output)
         domain_output = self.domainfc(domain_output)
+        domain_output = self.ll(domain_output)
 
         return classif_output, domain_output
 
@@ -41,15 +43,16 @@ class DBIResNet(nn.Module):
 # for Dogs vs Cats
 class DCResNet(nn.Module):
 
-    def __init__(self, c=1.0):
+    def __init__(self, lambda_param=0.1):
         super(DCResNet, self).__init__()
 
         self.model = torchvision.models.resnet34(pretrained=True)
         input_fc_dim = self.model.fc.in_features
         self.model.fc = nn.Linear(input_fc_dim, 2)
 
-        self.grl = GradientReversalLayer(c=c)
+        self.grl = GradientReversalLayer()
         self.domainfc = nn.Linear(input_fc_dim, 1)
+        self.ll = LambdaLayer(lambda_param=lambda_param)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -68,6 +71,7 @@ class DCResNet(nn.Module):
 
         domain_output = self.grl(output)
         domain_output = self.domainfc(domain_output)
+        domain_output = self.ll(domain_output)
 
         return classif_output, domain_output
 
@@ -75,15 +79,16 @@ class DCResNet(nn.Module):
 # for dice
 class DiceResNet(nn.Module):
 
-    def __init__(self, c=1.0):
+    def __init__(self, lambda_param=0.1):
         super(DiceResNet, self).__init__()
 
         self.model = torchvision.models.resnet34(pretrained=True)
         input_fc_dim = self.model.fc.in_features
         self.model.fc = nn.Linear(input_fc_dim, 6)
 
-        self.grl = GradientReversalLayer(c=c)
+        self.grl = GradientReversalLayer()
         self.domainfc = nn.Linear(input_fc_dim, 1)
+        self.ll = LambdaLayer(lambda_param=lambda_param)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -102,6 +107,7 @@ class DiceResNet(nn.Module):
 
         domain_output = self.grl(output)
         domain_output = self.domainfc(domain_output)
+        domain_output = self.ll(domain_output)
 
         return classif_output, domain_output
 
@@ -109,15 +115,16 @@ class DiceResNet(nn.Module):
 # for Food101
 class Food101ResNet(nn.Module):
 
-    def __init__(self, c=1.0):
+    def __init__(self, lambda_param=0.1):
         super(Food101ResNet, self).__init__()
 
         self.model = torchvision.models.resnet34(pretrained=True)
         input_fc_dim = self.model.fc.in_features
         self.model.fc = nn.Linear(input_fc_dim, 101)
 
-        self.grl = GradientReversalLayer(c=c)
+        self.grl = GradientReversalLayer()
         self.domainfc = nn.Linear(input_fc_dim, 1)
+        self.ll = LambdaLayer(lambda_param=lambda_param)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -136,20 +143,21 @@ class Food101ResNet(nn.Module):
 
         domain_output = self.grl(output)
         domain_output = self.domainfc(domain_output)
+        domain_output = self.ll(domain_output)
 
         return classif_output, domain_output
 
 
-def load_resnet_model(dataset_name, c=1.0):
+def load_resnet_model(dataset_name, lambda_param=0.1):
 
     if dataset_name == "DBI":
-        return DBIResNet(c=c)
+        return DBIResNet(lambda_param)
 
     elif dataset_name == "DogsCats":
-        return DCResNet(c=c)
+        return DCResNet(lambda_param)
 
     elif dataset_name == "Dice":
-        return DiceResNet(c=c)
+        return DiceResNet(lambda_param)
 
     else:
-        return Food101ResNet(c=c)
+        return Food101ResNet(lambda_param)
