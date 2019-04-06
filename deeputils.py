@@ -171,7 +171,7 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
         inputs, targets = batch
 
         ctargets = targets[0]
-        dtargets = targets[1]
+        dtargets = targets[1].float()
 
         inputs = inputs.cuda()
         ctargets = ctargets.cuda()
