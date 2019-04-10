@@ -5,10 +5,10 @@ from grl import GradientReversalLayer, LambdaLayer
 
 
 # for dog breed identification
-class DBISqueezeNet(nn.Module):
+class DBIDASqueezeNet(nn.Module):
 
     def __init__(self, lambda_param=0.1):
-        super(DBISqueezeNet, self).__init__()
+        super(DBIDASqueezeNet, self).__init__()
 
         self.model = torchvision.models.squeezenet1_1(pretrained=True)
         self.model.num_classes = 120
@@ -18,7 +18,7 @@ class DBISqueezeNet(nn.Module):
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(),
             nn.Dropout(p=0.5),
-            nn.Conv2d(input_fc_dim, 2, kernel_size=1),
+            nn.Conv2d(input_fc_dim, 2, kernel_size=(1, 1), stride=(1, 1)),
             nn.ReLU(inplace=True),
             nn.AdaptiveAvgPool2d((1, 1)),
             LambdaLayer(lambda_param=lambda_param)
@@ -34,10 +34,10 @@ class DBISqueezeNet(nn.Module):
 
 
 # for Dogs vs Cats
-class DCSqueezeNet(nn.Module):
+class DCDASqueezeNet(nn.Module):
 
     def __init__(self, lambda_param=0.1):
-        super(DCSqueezeNet, self).__init__()
+        super(DCDASqueezeNet, self).__init__()
 
         self.model = torchvision.models.squeezenet1_1(pretrained=True)
         self.model.num_classes = 2
@@ -47,7 +47,7 @@ class DCSqueezeNet(nn.Module):
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(),
             nn.Dropout(p=0.5),
-            nn.Conv2d(input_fc_dim, 2, kernel_size=1),
+            nn.Conv2d(input_fc_dim, 2, kernel_size=(1, 1), stride=(1, 1)),
             nn.ReLU(inplace=True),
             nn.AdaptiveAvgPool2d((1, 1)),
             LambdaLayer(lambda_param=lambda_param)
@@ -63,10 +63,10 @@ class DCSqueezeNet(nn.Module):
 
 
 # for dice
-class DiceSqueezeNet(nn.Module):
+class DiceDASqueezeNet(nn.Module):
 
     def __init__(self, lambda_param=0.1):
-        super(DiceSqueezeNet, self).__init__()
+        super(DiceDASqueezeNet, self).__init__()
 
         self.model = torchvision.models.squeezenet1_1(pretrained=True)
         self.model.num_classes = 6
@@ -76,7 +76,7 @@ class DiceSqueezeNet(nn.Module):
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(),
             nn.Dropout(p=0.5),
-            nn.Conv2d(input_fc_dim, 2, kernel_size=1),
+            nn.Conv2d(input_fc_dim, 2, kernel_size=(1, 1), stride=(1, 1)),
             nn.ReLU(inplace=True),
             nn.AdaptiveAvgPool2d((1, 1)),
             LambdaLayer(lambda_param==lambda_param)
@@ -92,10 +92,10 @@ class DiceSqueezeNet(nn.Module):
 
 
 # for Food101
-class Food101SqueezeNet(nn.Module):
+class Food101DASqueezeNet(nn.Module):
 
     def __init__(self, lambda_param=0.1):
-        super(Food101SqueezeNet, self).__init__()
+        super(Food101DASqueezeNet, self).__init__()
 
         self.model = torchvision.models.squeezenet1_1(pretrained=True)
         self.model.num_classes = 101
@@ -105,7 +105,7 @@ class Food101SqueezeNet(nn.Module):
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(),
             nn.Dropout(p=0.5),
-            nn.Conv2d(input_fc_dim, 2, kernel_size=1),
+            nn.Conv2d(input_fc_dim, 2, kernel_size=(1, 1), stride=(1, 1)),
             nn.ReLU(inplace=True),
             nn.AdaptiveAvgPool2d((1, 1)),
             LambdaLayer(lambda_param=lambda_param)
@@ -123,13 +123,13 @@ class Food101SqueezeNet(nn.Module):
 def load_squeezenet_model(dataset_name, lambda_param=0.1):
 
     if dataset_name == "DBI":
-        return DBISqueezeNet(lambda_param=lambda_param)
+        return DBIDASqueezeNet(lambda_param=lambda_param)
 
     elif dataset_name == "DogsCats":
-        return DCSqueezeNet(lambda_param=lambda_param)
+        return DCDASqueezeNet(lambda_param=lambda_param)
 
     elif dataset_name == "Dice":
-        return DiceSqueezeNet(lambda_param=lambda_param)
+        return DiceDASqueezeNet(lambda_param=lambda_param)
 
     else:
-        return Food101SqueezeNet(lambda_param=lambda_param)
+        return Food101DASqueezeNet(lambda_param=lambda_param)

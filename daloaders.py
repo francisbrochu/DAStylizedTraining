@@ -12,7 +12,7 @@ def style_tagger(target):
     return target, 1
 
 
-def load_dataset(dataset_name, batch_size=32, num_workers=3):  # todo the function to assign 2 labels, 2 labels managing
+def load_dataset(dataset_name, batch_size=32, num_workers=3):
 
     if dataset_name == "DBI":
         dataset_path = "dog-breed-identification/"

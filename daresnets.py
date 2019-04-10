@@ -5,10 +5,10 @@ from grl import GradientReversalLayer, LambdaLayer
 
 
 # for dog breed identification
-class DBIResNet(nn.Module):
+class DBIDAResNet(nn.Module):
 
     def __init__(self, lambda_param=0.1):
-        super(DBIResNet, self).__init__()
+        super(DBIDAResNet, self).__init__()
 
         self.model = torchvision.models.resnet34(pretrained=True)
         input_fc_dim = self.model.fc.in_features
@@ -41,10 +41,10 @@ class DBIResNet(nn.Module):
 
 
 # for Dogs vs Cats
-class DCResNet(nn.Module):
+class DCDAResNet(nn.Module):
 
     def __init__(self, lambda_param=0.1):
-        super(DCResNet, self).__init__()
+        super(DCDAResNet, self).__init__()
 
         self.model = torchvision.models.resnet34(pretrained=True)
         input_fc_dim = self.model.fc.in_features
@@ -77,10 +77,10 @@ class DCResNet(nn.Module):
 
 
 # for dice
-class DiceResNet(nn.Module):
+class DiceDAResNet(nn.Module):
 
     def __init__(self, lambda_param=0.1):
-        super(DiceResNet, self).__init__()
+        super(DiceDAResNet, self).__init__()
 
         self.model = torchvision.models.resnet34(pretrained=True)
         input_fc_dim = self.model.fc.in_features
@@ -113,10 +113,10 @@ class DiceResNet(nn.Module):
 
 
 # for Food101
-class Food101ResNet(nn.Module):
+class Food101DAResNet(nn.Module):
 
     def __init__(self, lambda_param=0.1):
-        super(Food101ResNet, self).__init__()
+        super(Food101DAResNet, self).__init__()
 
         self.model = torchvision.models.resnet34(pretrained=True)
         input_fc_dim = self.model.fc.in_features
@@ -151,13 +151,13 @@ class Food101ResNet(nn.Module):
 def load_resnet_model(dataset_name, lambda_param=0.1):
 
     if dataset_name == "DBI":
-        return DBIResNet(lambda_param)
+        return DBIDAResNet(lambda_param)
 
     elif dataset_name == "DogsCats":
-        return DCResNet(lambda_param)
+        return DCDAResNet(lambda_param)
 
     elif dataset_name == "Dice":
-        return DiceResNet(lambda_param)
+        return DiceDAResNet(lambda_param)
 
     else:
-        return Food101ResNet(lambda_param)
+        return Food101DAResNet(lambda_param)
