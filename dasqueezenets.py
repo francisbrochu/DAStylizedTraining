@@ -15,10 +15,11 @@ class DBIDASqueezeNet(nn.Module):
         input_fc_dim = self.model.classifier[1].in_channels
         self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
+        domain_final_conv = nn.Conv2d(input_fc_dim, 2, kernel_size=(1, 1), stride=(1, 1))
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(),
             nn.Dropout(p=0.5),
-            nn.Conv2d(input_fc_dim, 2, kernel_size=(1, 1), stride=(1, 1)),
+            domain_final_conv,
             nn.ReLU(inplace=True),
             nn.AdaptiveAvgPool2d((1, 1)),
             LambdaLayer(lambda_param=lambda_param)
@@ -44,10 +45,11 @@ class DCDASqueezeNet(nn.Module):
         input_fc_dim = self.model.classifier[1].in_channels
         self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
+        domain_final_conv = nn.Conv2d(input_fc_dim, 2, kernel_size=(1, 1), stride=(1, 1))
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(),
             nn.Dropout(p=0.5),
-            nn.Conv2d(input_fc_dim, 2, kernel_size=(1, 1), stride=(1, 1)),
+            domain_final_conv,
             nn.ReLU(inplace=True),
             nn.AdaptiveAvgPool2d((1, 1)),
             LambdaLayer(lambda_param=lambda_param)
@@ -73,13 +75,14 @@ class DiceDASqueezeNet(nn.Module):
         input_fc_dim = self.model.classifier[1].in_channels
         self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
+        domain_final_conv = nn.Conv2d(input_fc_dim, 2, kernel_size=(1, 1), stride=(1, 1))
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(),
             nn.Dropout(p=0.5),
-            nn.Conv2d(input_fc_dim, 2, kernel_size=(1, 1), stride=(1, 1)),
+            domain_final_conv,
             nn.ReLU(inplace=True),
             nn.AdaptiveAvgPool2d((1, 1)),
-            LambdaLayer(lambda_param==lambda_param)
+            LambdaLayer(lambda_param=lambda_param)
         )
 
     def forward(self, x):
@@ -102,10 +105,11 @@ class Food101DASqueezeNet(nn.Module):
         input_fc_dim = self.model.classifier[1].in_channels
         self.model.classifier[1] = nn.Conv2d(input_fc_dim, self.model.num_classes, kernel_size=(1, 1), stride=(1, 1))
 
+        domain_final_conv = nn.Conv2d(input_fc_dim, 2, kernel_size=(1, 1), stride=(1, 1))
         self.domain_classifier = nn.Sequential(
             GradientReversalLayer(),
             nn.Dropout(p=0.5),
-            nn.Conv2d(input_fc_dim, 2, kernel_size=(1, 1), stride=(1, 1)),
+            domain_final_conv,
             nn.ReLU(inplace=True),
             nn.AdaptiveAvgPool2d((1, 1)),
             LambdaLayer(lambda_param=lambda_param)

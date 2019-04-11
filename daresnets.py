@@ -22,6 +22,7 @@ class DBIDAResNet(nn.Module):
         output = self.model.conv1(x)
         output = self.model.bn1(output)
         output = self.model.relu(output)
+        output = self.model.maxpool(output)
 
         output = self.model.layer1(output)
         output = self.model.layer2(output)
@@ -58,6 +59,7 @@ class DCDAResNet(nn.Module):
         output = self.model.conv1(x)
         output = self.model.bn1(output)
         output = self.model.relu(output)
+        output = self.model.maxpool(output)
 
         output = self.model.layer1(output)
         output = self.model.layer2(output)
@@ -94,6 +96,7 @@ class DiceDAResNet(nn.Module):
         output = self.model.conv1(x)
         output = self.model.bn1(output)
         output = self.model.relu(output)
+        output = self.model.maxpool(output)
 
         output = self.model.layer1(output)
         output = self.model.layer2(output)
@@ -130,6 +133,7 @@ class Food101DAResNet(nn.Module):
         output = self.model.conv1(x)
         output = self.model.bn1(output)
         output = self.model.relu(output)
+        output = self.model.maxpool(output)
 
         output = self.model.layer1(output)
         output = self.model.layer2(output)
