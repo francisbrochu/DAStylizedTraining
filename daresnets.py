@@ -55,7 +55,7 @@ class DCDAResNet(nn.Module):
         self.grl = GradientReversalLayer()
         self.dfc1 = nn.Linear(input_fc_dim, 256)
         self.dfc2 = nn.Linear(256, 2)
-        # self.ll = LambdaLayer(lambda_param=lambda_param)
+        self.ll = LambdaLayer(lambda_param=lambda_param)
 
     def forward(self, x):
         output = self.model.conv1(x)
