@@ -16,7 +16,7 @@ class DBIDAResNet(nn.Module):
 
         self.grl = GradientReversalLayer()
         self.domainfc = nn.Linear(input_fc_dim, 2)
-        # self.ll = LambdaLayer(lambda_param=lambda_param)
+        self.ll = LambdaLayer(lambda_param=lambda_param)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -51,9 +51,9 @@ class DCDAResNet(nn.Module):
         input_fc_dim = self.model.fc.in_features
         self.model.fc = nn.Linear(input_fc_dim, 2)
 
-        # self.grl = GradientReversalLayer()
-        # self.domainfc = nn.Linear(input_fc_dim, 2)
-        # self.ll = LambdaLayer(lambda_param=lambda_param)
+        self.grl = GradientReversalLayer()
+        self.domainfc = nn.Linear(input_fc_dim, 2)
+        self.ll = LambdaLayer(lambda_param=lambda_param)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -90,7 +90,7 @@ class DiceDAResNet(nn.Module):
 
         self.grl = GradientReversalLayer()
         self.domainfc = nn.Linear(input_fc_dim, 2)
-        # self.ll = LambdaLayer(lambda_param=lambda_param)
+        self.ll = LambdaLayer(lambda_param=lambda_param)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -127,7 +127,7 @@ class Food101DAResNet(nn.Module):
 
         self.grl = GradientReversalLayer()
         self.domainfc = nn.Linear(input_fc_dim, 2)
-        # self.ll = LambdaLayer(lambda_param=lambda_param)
+        self.ll = LambdaLayer(lambda_param=lambda_param)
 
     def forward(self, x):
         output = self.model.conv1(x)
