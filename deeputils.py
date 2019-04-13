@@ -219,4 +219,4 @@ def evaluate_da(model, loader):
         error_classif_history.append(1. - accuracy_score(ctargets.cpu(), predictions_classif.cpu()))
         error_domain_history.append(1. - accuracy_score(dtargets.cpu(), predictions_domain.cpu()))
 
-    return error_classif_history  # , error_domain_history
+    return error_classif_history, error_domain_history
