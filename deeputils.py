@@ -158,7 +158,7 @@ def read_da_config(filename):
     return conf
 
 
-def training_da_epoch(model, train_loader, optimizer, criterion_classif, criterion_domain, scheduler=None):
+def training_da_epoch(model, train_loader, optimizer, criterion_classif, criterion_domain, scheduler=None, l=0.01):
     classif_loss_history = []
     domain_loss_history = []
 
@@ -170,15 +170,8 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
     for i, batch in enumerate(train_loader):
         inputs, targets = batch
 
-        if i == 0:
-            print(targets)
-
         ctargets = targets[0]
         dtargets = targets[1]
-
-        if i == 0 :
-            print(ctargets)
-            print(dtargets)
 
         inputs = inputs.cuda()
         ctargets = ctargets.cuda()
@@ -188,21 +181,10 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
 
         predictions_class, predictions_domain = model(inputs)
 
-        if i == 0:
-            print(predictions_class)
-            print(predictions_domain)
-
         classif_loss = criterion_classif(predictions_class, ctargets)
         domain_loss = criterion_domain(predictions_domain, dtargets)
 
-        if i == 0:
-            print(classif_loss.item())
-            print(domain_loss.item())
-
-        loss = classif_loss + domain_loss
-
-        if i == 0:
-            print(loss.item())
+        loss = classif_loss + l * domain_loss
 
         loss.backward()
         optimizer.step()
