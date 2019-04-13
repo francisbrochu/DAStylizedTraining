@@ -158,7 +158,7 @@ def read_da_config(filename):
     return conf
 
 
-def training_da_epoch(model, train_loader, optimizer, criterion_classif, criterion_domain, scheduler=None):
+def training_da_epoch(model, train_loader, optimizer, criterion_classif, criterion_domain, scheduler=None, l=0.1):
     classif_loss_history = []
     domain_loss_history = []
 
@@ -184,7 +184,7 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
         classif_loss = criterion_classif(predictions_class, ctargets)
         domain_loss = criterion_domain(predictions_domain, dtargets)
 
-        loss = classif_loss + domain_loss
+        loss = classif_loss + l * domain_loss
 
         loss.backward()
         optimizer.step()

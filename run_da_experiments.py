@@ -87,7 +87,8 @@ for i in range(n_epochs):
     start_time = time.time()
 
     # training epoch
-    _, _ = training_da_epoch(model, train_loader, optimizer, criterion_classif, criterion_domain, scheduler)
+    _, _ = training_da_epoch(model, train_loader, optimizer, criterion_classif, criterion_domain, scheduler,
+                             l=lambda_param)
 
     # evaluate on training set
     train_classif_error, train_domain_error = evaluate_da(model, train_loader)
