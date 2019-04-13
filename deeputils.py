@@ -182,17 +182,18 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
         predictions_class, predictions_domain = model(inputs)
 
         classif_loss = criterion_classif(predictions_class, ctargets)
-        domain_loss = criterion_domain(predictions_domain, dtargets)
+        # domain_loss = criterion_domain(predictions_domain, dtargets)
 
-        loss = classif_loss + l * domain_loss
+        # loss = classif_loss + l * domain_loss
 
-        loss.backward()
+        # loss.backward()
+        classif_loss.backward()
         optimizer.step()
 
         classif_loss_history.append(classif_loss.item())
-        domain_loss_history.append(domain_loss.item())
+        # domain_loss_history.append(domain_loss.item())
 
-    return classif_loss_history, domain_loss_history
+    return classif_loss_history  # , domain_loss_history
 
 
 def evaluate_da(model, loader):
