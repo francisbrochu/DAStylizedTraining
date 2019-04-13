@@ -195,12 +195,16 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
         classif_loss = criterion_classif(predictions_class, ctargets)
         domain_loss = criterion_domain(predictions_domain, dtargets)
 
-        # loss = classif_loss + domain_loss
+        if i == 0:
+            print(classif_loss.item())
+            print(domain_loss.item())
 
-        classif_loss.backward()
-        domain_loss.backward()
+        loss = classif_loss + domain_loss
 
-        # loss.backward()
+        if i == 0:
+            print(loss.item())
+
+        loss.backward()
         optimizer.step()
 
         classif_loss_history.append(classif_loss.item())
