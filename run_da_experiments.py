@@ -87,23 +87,20 @@ for i in range(n_epochs):
     start_time = time.time()
 
     # training epoch
-    _ = training_da_epoch(model, train_loader, optimizer, criterion_classif, criterion_domain, scheduler,
-                          l=lambda_param)
+    _, _ = training_da_epoch(model, train_loader, optimizer, criterion_classif, criterion_domain, scheduler)
 
     # evaluate on training set
-    # train_classif_error, train_domain_error = evaluate_da(model, train_loader)
-    train_classif_error = evaluate_da(model, train_loader)
+    train_classif_error, train_domain_error = evaluate_da(model, train_loader)
 
     # evaluate on validation set
-    # val_classif_error, val_domain_error = evaluate_da(model, validation_loader)
-    val_classif_error = evaluate_da(model, validation_loader)
+    val_classif_error, val_domain_error = evaluate_da(model, validation_loader)
 
     end_time = time.time()
 
     avg_train_classif_error = np.mean(train_classif_error)
     avg_valid_classif_error = np.mean(val_classif_error)
-    avg_train_domain_error = 0.5  # np.mean(train_domain_error)
-    avg_valid_domain_error = 0.5  # np.mean(val_domain_error)
+    avg_train_domain_error = np.mean(train_domain_error)
+    avg_valid_domain_error = np.mean(val_domain_error)
 
     epoch_history[0].append(avg_train_classif_error)
     epoch_history[1].append(avg_train_domain_error)

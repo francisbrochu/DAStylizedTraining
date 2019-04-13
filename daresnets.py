@@ -36,7 +36,7 @@ class DBIDAResNet(nn.Module):
 
         domain_output = self.grl(output)
         domain_output = self.domainfc(domain_output)
-        # domain_output = self.ll(domain_output)
+        domain_output = self.ll(domain_output)
 
         return classif_output, domain_output
 
@@ -71,11 +71,11 @@ class DCDAResNet(nn.Module):
 
         classif_output = self.model.fc(output)
 
-        # domain_output = self.grl(output)
-        # domain_output = self.domainfc(domain_output)
-        # domain_output = self.ll(domain_output)
+        domain_output = self.grl(output)
+        domain_output = self.domainfc(output)
+        domain_output = self.ll(domain_output)
 
-        return classif_output  # , domain_output
+        return classif_output, domain_output
 
 
 # for dice
@@ -110,7 +110,7 @@ class DiceDAResNet(nn.Module):
 
         domain_output = self.grl(output)
         domain_output = self.domainfc(domain_output)
-        # domain_output = self.ll(domain_output)
+        domain_output = self.ll(domain_output)
 
         return classif_output, domain_output
 
@@ -147,7 +147,7 @@ class Food101DAResNet(nn.Module):
 
         domain_output = self.grl(output)
         domain_output = self.domainfc(domain_output)
-        # domain_output = self.ll(domain_output)
+        domain_output = self.ll(domain_output)
 
         return classif_output, domain_output
 

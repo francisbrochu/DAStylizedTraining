@@ -158,7 +158,7 @@ def read_da_config(filename):
     return conf
 
 
-def training_da_epoch(model, train_loader, optimizer, criterion_classif, criterion_domain, scheduler=None, l=0.01):
+def training_da_epoch(model, train_loader, optimizer, criterion_classif, criterion_domain, scheduler=None):
     classif_loss_history = []
     domain_loss_history = []
 
@@ -179,22 +179,20 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
 
         optimizer.zero_grad()
 
-        # predictions_class, predictions_domain = model(inputs)
-        predictions_class = model(inputs)
+        predictions_class, predictions_domain = model(inputs)
 
         classif_loss = criterion_classif(predictions_class, ctargets)
-        # domain_loss = criterion_domain(predictions_domain, dtargets)
+        domain_loss = criterion_domain(predictions_domain, dtargets)
 
-        # loss = classif_loss + l * domain_loss
+        loss = classif_loss + domain_loss
 
-        # loss.backward()
-        classif_loss.backward()
+        loss.backward()
         optimizer.step()
 
         classif_loss_history.append(classif_loss.item())
-        # domain_loss_history.append(domain_loss.item())
+        domain_loss_history.append(domain_loss.item())
 
-    return classif_loss_history  # , domain_loss_history
+    return classif_loss_history, domain_loss_history
 
 
 def evaluate_da(model, loader):
@@ -213,13 +211,12 @@ def evaluate_da(model, loader):
         ctargets = ctargets.cuda()
         dtargets = dtargets.cuda()
 
-        # predictions_classif, predictions_domain = model(inputs)
-        predictions_classif  = model(inputs)
+        predictions_classif, predictions_domain = model(inputs)
 
         predictions_classif = predictions_classif.max(dim=1)[1]
-        # predictions_domain = predictions_domain.max(dim=1)[1]
+        predictions_domain = predictions_domain.max(dim=1)[1]
 
         error_classif_history.append(1. - accuracy_score(ctargets.cpu(), predictions_classif.cpu()))
-        # error_domain_history.append(1. - accuracy_score(dtargets.cpu(), predictions_domain.cpu()))
+        error_domain_history.append(1. - accuracy_score(dtargets.cpu(), predictions_domain.cpu()))
 
     return error_classif_history  # , error_domain_history
