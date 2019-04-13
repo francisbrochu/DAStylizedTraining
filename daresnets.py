@@ -51,8 +51,8 @@ class DCDAResNet(nn.Module):
         input_fc_dim = self.model.fc.in_features
         self.model.fc = nn.Linear(input_fc_dim, 2)
 
-        self.grl = GradientReversalLayer()
-        self.domainfc = nn.Linear(input_fc_dim, 2)
+        # self.grl = GradientReversalLayer()
+        # self.domainfc = nn.Linear(input_fc_dim, 2)
         # self.ll = LambdaLayer(lambda_param=lambda_param)
 
     def forward(self, x):
@@ -71,11 +71,11 @@ class DCDAResNet(nn.Module):
 
         classif_output = self.model.fc(output)
 
-        domain_output = self.grl(output)
-        domain_output = self.domainfc(domain_output)
+        # domain_output = self.grl(output)
+        # domain_output = self.domainfc(domain_output)
         # domain_output = self.ll(domain_output)
 
-        return classif_output, domain_output
+        return classif_output  # , domain_output
 
 
 # for dice
