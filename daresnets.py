@@ -53,8 +53,7 @@ class DCDAResNet(nn.Module):
         self.model.fc = nn.Linear(input_fc_dim, 2)
 
         self.grl = GradientReversalLayer()
-        self.dfc1 = nn.Linear(input_fc_dim, 256)
-        self.dfc2 = nn.Linear(256, 2)
+        self.domainfc = nn.Linear(input_fc_dim, 2)
         self.ll = LambdaLayer(lambda_param=lambda_param)
 
     def forward(self, x):
@@ -74,8 +73,7 @@ class DCDAResNet(nn.Module):
         classif_output = self.model.fc(output)
 
         domain_output = self.grl(output)
-        domain_output = F.relu(self.dfc1(domain_output))
-        domain_output = self.dfc2(domain_output)
+        domain_output = self.domainfc(domain_output)
         domain_output = self.ll(domain_output)
 
         return classif_output, domain_output
