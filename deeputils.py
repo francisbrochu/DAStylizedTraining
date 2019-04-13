@@ -170,8 +170,15 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
     for i, batch in enumerate(train_loader):
         inputs, targets = batch
 
+        if i == 0:
+            print(targets)
+
         ctargets = targets[0]
         dtargets = targets[1]
+
+        if i == 0 :
+            print(ctargets)
+            print(dtargets)
 
         inputs = inputs.cuda()
         ctargets = ctargets.cuda()
@@ -180,6 +187,11 @@ def training_da_epoch(model, train_loader, optimizer, criterion_classif, criteri
         optimizer.zero_grad()
 
         predictions_class, predictions_domain = model(inputs)
+
+        if i == 0:
+            print(predictions_class)
+            print(predictions_domain)
+
         classif_loss = criterion_classif(predictions_class, ctargets)
         domain_loss = criterion_domain(predictions_domain, dtargets)
 
