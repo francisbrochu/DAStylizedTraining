@@ -16,8 +16,8 @@ class DBIDAResNet(nn.Module):
         self.model.fc = nn.Linear(input_fc_dim, 120)
 
         self.grl = GradientReversalLayer()
-        self.domainfc = nn.Linear(input_fc_dim, 2)
         self.ll = LambdaLayer(lambda_param=lambda_param)
+        self.domainfc = nn.Linear(input_fc_dim, 2)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -36,8 +36,8 @@ class DBIDAResNet(nn.Module):
         classif_output = self.model.fc(output)
 
         domain_output = self.grl(output)
-        domain_output = self.domainfc(domain_output)
         domain_output = self.ll(domain_output)
+        domain_output = self.domainfc(domain_output)
 
         return classif_output, domain_output
 
@@ -53,8 +53,8 @@ class DCDAResNet(nn.Module):
         self.model.fc = nn.Linear(input_fc_dim, 2)
 
         self.grl = GradientReversalLayer()
-        self.domainfc = nn.Linear(input_fc_dim, 2)
         self.ll = LambdaLayer(lambda_param=lambda_param)
+        self.domainfc = nn.Linear(input_fc_dim, 2)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -73,8 +73,8 @@ class DCDAResNet(nn.Module):
         classif_output = self.model.fc(output)
 
         domain_output = self.grl(output)
-        domain_output = self.domainfc(domain_output)
         domain_output = self.ll(domain_output)
+        domain_output = self.domainfc(domain_output)
 
         return classif_output, domain_output
 
@@ -90,8 +90,8 @@ class DiceDAResNet(nn.Module):
         self.model.fc = nn.Linear(input_fc_dim, 6)
 
         self.grl = GradientReversalLayer()
-        self.domainfc = nn.Linear(input_fc_dim, 2)
         self.ll = LambdaLayer(lambda_param=lambda_param)
+        self.domainfc = nn.Linear(input_fc_dim, 2)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -110,8 +110,8 @@ class DiceDAResNet(nn.Module):
         classif_output = self.model.fc(output)
 
         domain_output = self.grl(output)
-        domain_output = self.domainfc(domain_output)
         domain_output = self.ll(domain_output)
+        domain_output = self.domainfc(domain_output)
 
         return classif_output, domain_output
 
@@ -127,8 +127,8 @@ class Food101DAResNet(nn.Module):
         self.model.fc = nn.Linear(input_fc_dim, 101)
 
         self.grl = GradientReversalLayer()
-        self.domainfc = nn.Linear(input_fc_dim, 2)
         self.ll = LambdaLayer(lambda_param=lambda_param)
+        self.domainfc = nn.Linear(input_fc_dim, 2)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -147,8 +147,8 @@ class Food101DAResNet(nn.Module):
         classif_output = self.model.fc(output)
 
         domain_output = self.grl(output)
-        domain_output = self.domainfc(domain_output)
         domain_output = self.ll(domain_output)
+        domain_output = self.domainfc(domain_output)
 
         return classif_output, domain_output
 
