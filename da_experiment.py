@@ -4,7 +4,7 @@ import torchvision
 import torch.optim
 import numpy as np
 import torch.utils.data
-from deeputils import evaluate_da, generate_parameter_lists, read_da_config
+from deeputils import generate_parameter_lists, read_da_config
 from daloaders import load_dataset
 import time
 from daresnets import load_resnet_model
@@ -110,11 +110,11 @@ for i in range(n_epochs):
         classif_loss = criterion_classif(predictions_class, ctargets)
         domain_loss = criterion_domain(predictions_domain, dtargets)
 
-        # loss = classif_loss + domain_loss
+        loss = classif_loss + domain_loss
 
-        # loss.backward()
-        classif_loss.backward(retain_graph=True)
-        domain_loss.backward()
+        loss.backward()
+        # classif_loss.backward(retain_graph=True)
+        # domain_loss.backward()
         optimizer.step()
 
     # evaluate on training set
