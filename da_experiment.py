@@ -108,13 +108,13 @@ for i in range(n_epochs):
         predictions_class, predictions_domain = model(inputs)
 
         classif_loss = criterion_classif(predictions_class, ctargets)
-        domain_loss = criterion_domain(predictions_domain, dtargets)
+        domain_loss = conf["lambda_param"] * criterion_domain(predictions_domain, dtargets)
 
-        loss = classif_loss + conf["lambda_param"] * domain_loss
-        loss.backward()
+        # loss = classif_loss + domain_loss
+        # loss.backward()
 
-        # classif_loss.backward(retain_graph=True)
-        # domain_loss.backward()
+        classif_loss.backward(retain_graph=True)
+        domain_loss.backward()
 
         # classif_loss.backward()
         optimizer.step()
