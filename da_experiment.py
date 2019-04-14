@@ -93,7 +93,7 @@ for i in range(n_epochs):
     if scheduler is not None:
         scheduler.step()
 
-    for i, batch in enumerate(train_loader):
+    for j, batch in enumerate(train_loader):
         inputs, targets = batch
 
         ctargets = targets[0]
@@ -111,10 +111,12 @@ for i in range(n_epochs):
         domain_loss = criterion_domain(predictions_domain, dtargets)
 
         loss = classif_loss + domain_loss
-
         loss.backward()
+
         # classif_loss.backward(retain_graph=True)
         # domain_loss.backward()
+
+        # classif_loss.backward()
         optimizer.step()
 
     # evaluate on training set
@@ -122,7 +124,7 @@ for i in range(n_epochs):
     train_classif_error = []
     train_domain_error = []
 
-    for i, batch in enumerate(train_loader):
+    for j, batch in enumerate(train_loader):
         inputs, targets = batch
 
         ctargets = targets[0]
@@ -144,7 +146,7 @@ for i in range(n_epochs):
     val_classif_error = []
     val_domain_error = []
 
-    for i, batch in enumerate(train_loader):
+    for j, batch in enumerate(train_loader):
         inputs, targets = batch
 
         ctargets = targets[0]
