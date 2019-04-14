@@ -54,7 +54,7 @@ class DCDAResNet(nn.Module):
 
         self.grl = GradientReversalLayer()
         self.domainfc = nn.Linear(input_fc_dim, 2)
-        self.ll = LambdaLayer(lambda_param=lambda_param)
+        # self.ll = LambdaLayer(lambda_param=lambda_param)
 
     def forward(self, x):
         output = self.model.conv1(x)
@@ -74,7 +74,7 @@ class DCDAResNet(nn.Module):
 
         domain_output = self.grl(output)
         domain_output = self.domainfc(domain_output)
-        domain_output = self.ll(domain_output)
+        # domain_output = self.ll(domain_output)
 
         return classif_output, domain_output
 
