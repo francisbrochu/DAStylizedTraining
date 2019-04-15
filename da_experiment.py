@@ -83,6 +83,8 @@ print(starttime_string)
 logfile.write(info_string + "\n")
 logfile.write(starttime_string + "\n")
 
+params_check = ["model.fc.weight", "domainfc.weight"]
+
 # train
 for i in range(n_epochs):
     start_time = time.time()
@@ -114,7 +116,21 @@ for i in range(n_epochs):
         # loss.backward()
 
         classif_loss.backward(retain_graph=True)
+
+        print("After classif gradient")
+        for n, p in model.named_parameters():
+            if n in params_check:
+                print(n)
+                print(p.grad)
+
+
         domain_loss.backward()
+
+        print("After domain gradient")
+        for n, p in model.named_parameters():
+            if n in params_check:
+                print(n)
+                print(p.grad)
 
         # classif_loss.backward()
         optimizer.step()
