@@ -83,7 +83,7 @@ print(starttime_string)
 logfile.write(info_string + "\n")
 logfile.write(starttime_string + "\n")
 
-params_check = ["model.fc.weight", "domainfc.weight"]
+params_check = ["model.fc.weight", "domainfc.weight", "model.layer4.2.conv2.weight"]
 
 # train
 for i in range(n_epochs):
@@ -112,10 +112,10 @@ for i in range(n_epochs):
         classif_loss = criterion_classif(predictions_class, ctargets)
         domain_loss = conf["lambda_param"] * criterion_domain(predictions_domain, dtargets)
 
-        loss = classif_loss + domain_loss
-        loss.backward()
+        # loss = classif_loss + domain_loss
+        # loss.backward()
 
-        # classif_loss.backward(retain_graph=True)
+        classif_loss.backward(retain_graph=True)
 
         if j == 0:
             print("After classif gradient")
@@ -124,14 +124,14 @@ for i in range(n_epochs):
                     print(n)
                     print(p.grad)
 
-        # domain_loss.backward()
+        domain_loss.backward()
 
-        # if j == 0:
-        #    print("After domain gradient")
-        #    for n, p in model.named_parameters():
-        #        if n in params_check:
-        #            print(n)
-        #            print(p.grad)
+        if j == 0:
+            print("After domain gradient")
+            for n, p in model.named_parameters():
+                if n in params_check:
+                    print(n)
+                    print(p.grad)
 
         # classif_loss.backward()
 
