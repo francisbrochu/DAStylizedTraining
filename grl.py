@@ -28,11 +28,11 @@ class ReverseLayerF(Function):
     fbrochu mofified his function slightly
     """
     @staticmethod
-    def forward(x):
+    def forward(ctx, x):
         return x.view_as(x)
 
     @staticmethod
-    def backward(grad_output):
+    def backward(ctx, grad_output):
         output = grad_output.neg()
 
         return output, None
