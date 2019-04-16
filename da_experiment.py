@@ -8,7 +8,6 @@ from deeputils import generate_parameter_lists, read_da_config
 from daloaders import load_dataset
 import time
 from daresnets import load_resnet_model
-from dasqueezenets import load_squeezenet_model
 import os
 import sys
 from sklearn.metrics import accuracy_score
