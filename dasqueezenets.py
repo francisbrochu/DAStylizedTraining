@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torchvision
-from grl import GradientReversalLayer, LambdaLayer
+from grl import LambdaLayer,
 
 
 # for dog breed identification
