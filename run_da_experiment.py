@@ -75,8 +75,8 @@ model_i = 0
 logfile = open("{}_{}_da_{}.log".format(dataset, model_type, id), "w")
 
 starttime_string = "Starting training at {}".format(time.strftime("%H:%M:%S (%d %b)"))
-info_string = "Starting experiment #{} on dataset {}, using {} architecture".format(id, dataset,
-                                                                                    model_type)
+info_string = "Starting DA experiment #{} on dataset {}, using {} architecture".format(id, dataset,
+                                                                                       model_type)
 print(info_string)
 print(starttime_string)
 logfile.write(info_string + "\n")
