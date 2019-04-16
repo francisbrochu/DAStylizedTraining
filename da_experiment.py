@@ -115,25 +115,25 @@ for i in range(n_epochs):
         # loss = classif_loss + domain_loss
         # loss.backward()
 
-        classif_loss.backward(retain_graph=True)
+        #classif_loss.backward(retain_graph=True)
 
-        if j == 0:
-            print("After classif gradient")
-            for n, p in model.named_parameters():
-                if n in params_check:
-                    print(n)
-                    print(p.grad)
+        #if j == 0:
+        #    print("After classif gradient")
+        #    for n, p in model.named_parameters():
+        #        if n in params_check:
+        #            print(n)
+        #            print(p.grad)
 
-        domain_loss.backward()
+        #domain_loss.backward()
 
-        if j == 0:
-            print("After domain gradient")
-            for n, p in model.named_parameters():
-                if n in params_check:
-                    print(n)
-                    print(p.grad)
+        #if j == 0:
+        #    print("After domain gradient")
+        #    for n, p in model.named_parameters():
+        #        if n in params_check:
+        #            print(n)
+        #            print(p.grad)
 
-        # classif_loss.backward()
+        classif_loss.backward()
 
         optimizer.step()
 
