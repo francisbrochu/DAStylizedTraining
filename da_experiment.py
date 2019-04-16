@@ -112,8 +112,8 @@ for i in range(n_epochs):
         classif_loss = criterion_classif(predictions_class, ctargets)
         domain_loss = conf["lambda_param"] * criterion_domain(predictions_domain, dtargets)
 
-        # loss = classif_loss + domain_loss
-        # loss.backward()
+        loss = classif_loss + domain_loss
+        loss.backward()
 
         #classif_loss.backward(retain_graph=True)
 
@@ -133,7 +133,7 @@ for i in range(n_epochs):
         #            print(n)
         #            print(p.grad)
 
-        classif_loss.backward()
+        # classif_loss.backward()
 
         optimizer.step()
 

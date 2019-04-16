@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision
-from grl import GradientReversalLayer, LambdaLayer
+from grl import GradientReversalLayer, LambdaLayer, ReverseLayerF
 
 
 # for dog breed identification
@@ -15,7 +15,7 @@ class DBIDAResNet(nn.Module):
         input_fc_dim = self.model.fc.in_features
         self.model.fc = nn.Linear(input_fc_dim, 120)
 
-        self.grl = GradientReversalLayer()
+        #self.grl = GradientReversalLayer()
         self.domainfc = nn.Linear(input_fc_dim, 2)
         self.ll = LambdaLayer(lambda_param=lambda_param)
 
@@ -35,7 +35,8 @@ class DBIDAResNet(nn.Module):
 
         classif_output = self.model.fc(output)
 
-        domain_output = self.grl(output)
+        # domain_output = self.grl(output)
+        domain_output = ReverseLayerF.apply(output)
         domain_output = self.domainfc(domain_output)
         domain_output = self.ll(domain_output)
 
@@ -52,7 +53,7 @@ class DCDAResNet(nn.Module):
         input_fc_dim = self.model.fc.in_features
         self.model.fc = nn.Linear(input_fc_dim, 2)
 
-        self.grl = GradientReversalLayer()
+        # self.grl = GradientReversalLayer()
         self.domainfc = nn.Linear(input_fc_dim, 2)
         # self.ll = LambdaLayer(lambda_param=lambda_param)
 
@@ -72,7 +73,8 @@ class DCDAResNet(nn.Module):
 
         classif_output = self.model.fc(output)
 
-        domain_output = self.grl(output)
+        # domain_output = self.grl(output)
+        domain_output = ReverseLayerF.apply(output)
         domain_output = self.domainfc(domain_output)
         # domain_output = self.ll(domain_output)
 
@@ -89,7 +91,7 @@ class DiceDAResNet(nn.Module):
         input_fc_dim = self.model.fc.in_features
         self.model.fc = nn.Linear(input_fc_dim, 6)
 
-        self.grl = GradientReversalLayer()
+        #self.grl = GradientReversalLayer()
         self.domainfc = nn.Linear(input_fc_dim, 2)
         self.ll = LambdaLayer(lambda_param=lambda_param)
 
@@ -109,7 +111,8 @@ class DiceDAResNet(nn.Module):
 
         classif_output = self.model.fc(output)
 
-        domain_output = self.grl(output)
+        #domain_output = self.grl(output)
+        domain_output = ReverseLayerF.apply(output)
         domain_output = self.domainfc(domain_output)
         domain_output = self.ll(domain_output)
 
@@ -126,7 +129,7 @@ class Food101DAResNet(nn.Module):
         input_fc_dim = self.model.fc.in_features
         self.model.fc = nn.Linear(input_fc_dim, 101)
 
-        self.grl = GradientReversalLayer()
+        #self.grl = GradientReversalLayer()
         self.domainfc = nn.Linear(input_fc_dim, 2)
         self.ll = LambdaLayer(lambda_param=lambda_param)
 
@@ -146,7 +149,8 @@ class Food101DAResNet(nn.Module):
 
         classif_output = self.model.fc(output)
 
-        domain_output = self.grl(output)
+        #domain_output = self.grl(output)
+        domain_output = ReverseLayerF.apply(output)
         domain_output = self.domainfc(domain_output)
         domain_output = self.ll(domain_output)
 
