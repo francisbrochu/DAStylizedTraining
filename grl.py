@@ -1,15 +1,6 @@
 import torch.nn as nn
 from torch.autograd import Function
 
-class GradientReversalLayer(nn.Module):
-
-    def __init__(self):
-        super(GradientReversalLayer, self).__init__()
-
-    def forward(self, x):
-        h = x.register_hook(lambda grad: grad * -1)
-        return x
-
 
 class LambdaLayer(nn.Module):
 
