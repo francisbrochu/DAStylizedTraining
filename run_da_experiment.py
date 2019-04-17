@@ -45,12 +45,8 @@ epochs_list = conf["epochs_list"]
 train_loader, validation_loader = load_dataset(dataset, batch_size=batch_size, num_workers=num_workers)
 
 # define model
-if model_type == "resnet":
-    model = load_resnet_model(dataset, lambda_param)
-    model.cuda()
-else:
-    model = load_squeezenet_model(dataset, lambda_param)
-    model.cuda()
+model = load_resnet_model(dataset, lambda_param)
+model.cuda()
 
 # define optimizer and loss
 # generate the parameter lists first
