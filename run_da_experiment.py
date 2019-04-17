@@ -82,8 +82,6 @@ print(starttime_string)
 logfile.write(info_string + "\n")
 logfile.write(starttime_string + "\n")
 
-params_check = ["model.fc.weight", "domainfc.weight", "model.layer4.2.conv2.weight"]
-
 # train
 for i in range(n_epochs):
     start_time = time.time()
