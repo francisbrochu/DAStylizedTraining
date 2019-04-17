@@ -137,7 +137,7 @@ for i in range(n_epochs):
     val_classif_error = []
     val_domain_error = []
 
-    for j, batch in enumerate(train_loader):
+    for j, batch in enumerate(validation_loader):
         inputs, targets = batch
 
         ctargets = targets[0]
