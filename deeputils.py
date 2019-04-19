@@ -222,3 +222,22 @@ def evaluate_da(model, loader):
         error_domain_history.append(1. - accuracy_score(dtargets.cpu(), predictions_domain.cpu()))
 
     return error_classif_history, error_domain_history
+
+
+def TopKAccuracy(predictions, targets, k=1):
+    if k == 1:
+        pred = predictions.max(dim=1)[1]
+        pred = pred.cpu()
+        targ = targets.cpu()
+        return accuracy_score(pred, targ)
+
+    else:
+        pred = predictions.detach().cpu().numpy()
+        targ = targets.detach().cpu().numpy()
+        score = np.zeros(shape=len(targ))
+        for i, t in enumerate(targ):
+            p = np.argsort(pred[i])
+            if t in p[-k:]:
+                score[i] = 1
+
+        return np.mean(score)
