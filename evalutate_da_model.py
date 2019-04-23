@@ -39,18 +39,17 @@ test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=64, shuffle=T
 
 batch_accuracies = []
 
-with torch.no_grad():
-    print("Model loaded and ready, predicting on the test set.")
+print("Model loaded and ready, predicting on the test set.")
 
-    for i, batch in enumerate(test_loader):
-        images, targets = batch
+for i, batch in enumerate(test_loader):
+    images, targets = batch
 
-        images = images.cuda()
-        targets = targets.cuda()
+    images = images.cuda()
+    targets = targets.cuda()
 
-        predictions = model(images)
+    predictions, _ = model(images)  # discard the domain predictions
 
-        batch_accuracies.append(TopKAccuracy(predictions, targets, k=k))
+    batch_accuracies.append(TopKAccuracy(predictions, targets, k=k))
 
 avg_acc = np.mean(batch_accuracies)
 
